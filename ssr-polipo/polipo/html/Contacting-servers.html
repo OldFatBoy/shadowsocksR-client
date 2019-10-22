@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Contacting servers</title>
+
+<meta name="description" content="The Polipo Manual: Contacting servers">
+<meta name="keywords" content="The Polipo Manual: Contacting servers">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="Allowed-ports.html#Allowed-ports" rel="next" title="Allowed ports">
+<link href="Access-control.html#Access-control" rel="previous" title="Access control">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Contacting-servers"></a>
+<div class="header">
+<p>
+Next: <a href="HTTP-tuning.html#HTTP-tuning" accesskey="n" rel="next">HTTP tuning</a>, Previous: <a href="Client-connections.html#Client-connections" accesskey="p" rel="previous">Client connections</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Contacting-servers-1"></a>
+<h3 class="section">3.2 Contacting servers</h3>
+
+<a name="index-multiple-addresses"></a>
+<a name="index-IPv6-1"></a>
+<a name="index-useTemporarySourceAddress"></a>
+<a name="index-proxyOutgoingAddress"></a>
+
+<p>A server can have multiple addresses, for example if it is
+<em>multihomed</em> (connected to multiple networks) or if it can speak
+both IPv4 and IPv6.  Polipo will try all of a hosts addresses in turn;
+once it has found one that works, it will stick to that address until
+it fails again.
+</p>
+<p>If your host has multiple IP addresses, you can specify an IP address
+to use for outgoing connections with the <code>proxyOutgoingAddress</code>
+variable.  If not specified (the default), it will be determined by
+the host OS.
+</p>
+<p>If connecting via IPv6 there is the possibility to use temporary
+source addresses to increase privacy (RFC&nbsp;3041). The variable
+<code>useTemporarySourceAddress</code> controls the use of temporary
+addresses for outgoing connections; if set to <code>true</code>
+temporary addresses are preferred, if set to <code>false</code> static addresses
+are used and if set to <code>maybe</code> (the default) the operation
+system default is in effect. This setting is not available
+on all operation systems.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Allowed-ports.html#Allowed-ports" accesskey="1">Allowed ports</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Where the proxy is allowed to connect.
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

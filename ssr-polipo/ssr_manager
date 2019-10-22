@@ -1,0 +1,108 @@
+#!/bin/bash
+# Author mengkaikai
+
+install_path=/usr/local/shadowsocksr-manyuser
+edit_tool=/usr/bin/vi 
+
+########## polipo 下载 git clone https://github.com/jech/polipo.git
+########## 方法1 shadowsocks 下载 wget https://github.com/cndaqiang/shadowsocksr/archive/manyuser.zip 本脚本采用此工程 
+########## ssr 加速 wget https://github.com/teddysun/across/raw/master/bbr.sh
+########## ssr.sh wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh
+########## 本地客户端git clone https://github.com/SAMZONG/gfwlist2privoxy.git 通过执行 ssr 来安装shadowsocksR 代码
+
+
+
+case $1 in
+    config)
+        ${edit_tool} ./shadowsocksr-manyuser/config.json
+        ;;
+    init)
+        echo "Install shadowsocksr to ${install_path}"
+        cp -af ./shadowsocksr-manyuser /usr/local/
+        
+        echo "Configure docker proxy"
+        mkdir -p /etc/systemd/system/docker.service.d/
+        cp http*proxy.conf /etc/systemd/system/docker.service.d/
+        
+        mkdir -p /root/.docker/
+        cp docker-proxy-config.json /root/.docker/config.json
+        net_device=`find /etc/sysconfig/network-scripts/ -type f -name "ifcfg-*" | grep -v ifcfg-lo | awk -F\/ '{print $NF}' | awk -F- '{print $2}'`
+        ip_addr=`ifconfig ${net_device} | grep -v inet6 | grep inet | awk '{print $2}'`
+        sed -i "s/ip_addr:port/${ip_addr}:8123/g" /root/.docker/config.json
+        systemctl daemon-reload
+        systemctl restart docker
+
+        echo "Install polipo"
+        mkdir -p /etc/polipo/
+        cp ./config /etc/polipo
+        cp ./polipo.service /usr/lib/systemd/system/
+        cd ./polipo
+        make install 
+        
+        echo "Set enviroment info"
+        sed -i "/export http.*proxy=*/d" /etc/profile
+        sed -i "/.*no.*proxy.*/d" /etc/profile
+        sed -i "/unset http_proxy.*/d" /etc/profile 
+        echo "export http_proxy=\"http://127.0.0.1:8123\"" >> /etc/profile
+        echo "export https_proxy=\"http://127.0.0.1:8123\"" >> /etc/profile
+        echo 'no_proxy_8=$(echo 8.{11,14,16}.0.{1..254})' >> /etc/profile
+        echo 'export no_proxy="localhost,127.0.0.1,registry.docker-cn.com,hub-mirror.c.163.com,${no_proxy_8// /,}"' >> /etc/profile
+
+        source /etc/profile
+
+        echo "Init complete"
+        ;;
+    start)
+        echo "Set enviroment info"
+        sed -i "/export http.*proxy=*/d" /etc/profile
+        sed -i "/.*no.*proxy.*/d" /etc/profile
+        sed -i "/unset http_proxy.*/d" /etc/profile 
+        echo "export http_proxy=\"http://127.0.0.1:8123\"" >> /etc/profile
+        echo "export https_proxy=\"http://127.0.0.1:8123\"" >> /etc/profile
+        echo 'no_proxy_8=$(echo 8.{11,14,16}.0.{1..254})' >> /etc/profile
+        echo 'export no_proxy="localhost,127.0.0.1,registry.docker-cn.com,hub-mirror.c.163.com,${no_proxy_8// /,}"' >> /etc/profile
+
+        source /etc/profile
+        cd ${install_path}
+        python ./shadowsocks/local.py -c config.json -d start 
+        systemctl start polipo.service 
+        ;;
+    stop)
+        cd ${install_path}
+        python ./shadowsocks/local.py -d stop 
+        systemctl stop polipo.service
+        sed -i "/export http.*proxy=*/d" /etc/profile
+        sed -i "/.*no.*proxy.*/d" /etc/profile
+        sed -i "/unset http_proxy.*/d" /etc/profile 
+        echo 'unset http_proxy https_proxy no_proxy' >> /etc/profile
+        source /etc/profile 
+        ;;
+    autostart)
+        echo "python ${install_path}/shadowsocks/local.py -c ${install_path}/config.json -d start" >> /etc/rc.local
+        systemctl enable polipo.service
+        sed -i "/export http.*proxy=*/d" /etc/profile
+        sed -i "/.*no.*proxy.*/d" /etc/profile
+        sed -i "/unset http_proxy.*/d" /etc/profile 
+        echo "http_proxy=http://127.0.0.1:8123" >> /etc/profile
+        echo "https_proxy=http://127.0.0.1:8123" >> /etc/profile
+        echo 'no_proxy_8=$(echo 8.{11,14,16}.0.{1..254})' >> /etc/profile
+        echo 'export no_proxy="localhost,127.0.0.1,registry.docker-cn.com,hub-mirror.c.163.com,${no_proxy_8// /,}"' >> /etc/profile
+        ;;
+    resetproxy)
+        export http_proxy=http://127.0.0.1:8123
+        export https_proxy=http://127.0.0.1:8123
+        bash
+        ;;
+    unsetproxy)
+        unset http_proxy
+        unset https_proxy
+        bash
+        ;;
+    *)
+        echo "usage: source $0 init|config|start|stop|autostart|resetproxy|unsetproxy"
+        echo "before start|autostart shadowsocksr local client, pelase run source $0 config|init first"
+        echo "after run source $0 start|stop, must run source /etc/profile"
+        echo "if switch anothor console, please run source $0 resetproxy"
+        exit 1
+        ;;
+esac

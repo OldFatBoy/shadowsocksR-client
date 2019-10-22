@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Logging</title>
+
+<meta name="description" content="The Polipo Manual: Logging">
+<meta name="keywords" content="The Polipo Manual: Logging">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Polipo-Invocation.html#Polipo-Invocation" rel="up" title="Polipo Invocation">
+<link href="Browser-configuration.html#Browser-configuration" rel="next" title="Browser configuration">
+<link href="Daemon.html#Daemon" rel="previous" title="Daemon">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Logging"></a>
+<div class="header">
+<p>
+Previous: <a href="Daemon.html#Daemon" accesskey="p" rel="previous">Daemon</a>, Up: <a href="Polipo-Invocation.html#Polipo-Invocation" accesskey="u" rel="up">Polipo Invocation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Logging-1"></a>
+<h4 class="subsection">2.1.3 Logging</h4>
+<a name="index-logging"></a>
+<a name="index-logLevel"></a>
+<a name="index-logFile"></a>
+<a name="index-logFilePermissions"></a>
+<a name="index-logSyslog"></a>
+<a name="index-logFacility"></a>
+<a name="index-scrubLogs"></a>
+
+<p>When it encounters a difficulty, Polipo will print a friendly message.
+The location where these messages go is controlled by the
+configuration variables <code>logFile</code> and <code>logSyslog</code>.
+If <code>logSyslog</code> is <code>true</code>, error messages go to the system log
+facility given by <code>logFacility</code>.  If <code>logFile</code> is set, it is
+the name of a file where all output will accumulate.  If <code>logSyslog</code>
+is <code>false</code> and <code>logFile</code> is empty, messages go to the error
+output of the process (normally the terminal).
+</p>
+<p>The variable <code>logFile</code> defaults to empty if <code>daemonise</code> is
+false, and to &lsquo;<samp>/var/log/polipo</samp>&rsquo; otherwise.  The variable
+<code>logSyslog</code> defaults to <code>false</code>, and <code>logFacility</code>
+defaults to &lsquo;<samp>user</samp>&rsquo;.
+</p>
+<p>If <code>logFile</code> is set, then the variable <code>logFilePermissions</code>
+controls the Unix permissions with which the log file will be created if
+it doesn&rsquo;t exist.  It defaults to 0640.
+</p>
+<p>The amount of logging is controlled by the variable <code>logLevel</code>.
+Please see the file &lsquo;<samp>log.h</samp>&rsquo; in the Polipo sources for the
+possible values of <code>logLevel</code>.
+</p>
+<p>Keeping extensive logs on your users browsing habits is probably
+a serere violation of their privacy.  If the variable <code>scrubLogs</code>
+is set, then Polipo will scrub most, if not all, private information
+from its logs.
+</p>
+
+
+
+</body>
+</html>

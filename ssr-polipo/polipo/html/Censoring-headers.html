@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Censoring headers</title>
+
+<meta name="description" content="The Polipo Manual: Censoring headers">
+<meta name="keywords" content="The Polipo Manual: Censoring headers">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="HTTP-tuning.html#HTTP-tuning" rel="up" title="HTTP tuning">
+<link href="Censor-Accept_002dLanguage.html#Censor-Accept_002dLanguage" rel="next" title="Censor Accept-Language">
+<link href="Tuning-the-HTTP-parser.html#Tuning-the-HTTP-parser" rel="previous" title="Tuning the HTTP parser">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Censoring-headers"></a>
+<div class="header">
+<p>
+Next: <a href="Intermediate-proxies.html#Intermediate-proxies" accesskey="n" rel="next">Intermediate proxies</a>, Previous: <a href="Tuning-the-HTTP-parser.html#Tuning-the-HTTP-parser" accesskey="p" rel="previous">Tuning the HTTP parser</a>, Up: <a href="HTTP-tuning.html#HTTP-tuning" accesskey="u" rel="up">HTTP tuning</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Censoring-headers-1"></a>
+<h4 class="subsection">3.3.2 Censoring headers</h4>
+<a name="index-privacy"></a>
+<a name="index-anonymity"></a>
+<a name="index-Referer"></a>
+<a name="index-cookies"></a>
+<a name="index-censorReferer"></a>
+<a name="index-censoredHeaders"></a>
+<a name="index-proxyName-1"></a>
+<a name="index-disableVia"></a>
+
+<p>Polipo offers the option to censor given HTTP headers in both client
+requests and server replies.  The main application of this feature is
+to very slightly improve the user&rsquo;s privacy by eliminating cookies and
+some content-negotiation headers.
+</p>
+<p>It is important to understand that these features merely make it
+slightly more difficult to gather statistics about the user&rsquo;s
+behaviour.  While they do not actually prevent such statistics from
+being collected, they might make it less cost-effective to do so.
+</p>
+<p>The general mechanism is controlled by the variable
+<code>censoredHeaders</code>, the value of which is a case-insensitive list
+of headers to unconditionally censor.  By default, it is empty, but
+I recommend that you set it to &lsquo;<samp>From, Accept-Language</samp>&rsquo;.  Adding
+headers such as &lsquo;<samp>Set-Cookie</samp>&rsquo;, &lsquo;<samp>Set-Cookie2</samp>&rsquo;, &lsquo;<samp>Cookie</samp>&rsquo;,
+&lsquo;<samp>Cookie2</samp>&rsquo; or &lsquo;<samp>User-Agent</samp>&rsquo; to this list will probably break
+many web sites.
+</p>
+<p>The case of the &lsquo;<samp>Referer</samp>&rsquo;<a name="DOCF5" href="#FOOT5"><sup>5</sup></a> header is treated specially because many
+sites will refuse to serve pages when it is not provided.  If
+<code>censorReferer</code> is <code>false</code> (the default), &lsquo;<samp>Referer</samp>&rsquo;
+headers are passed unchanged to the server.  If <code>censorReferer</code>
+is <code>maybe</code>, &lsquo;<samp>Referer</samp>&rsquo; headers are passed to the server only
+when they refer to the same host as the resource being fetched.  If
+<code>censorReferer</code> is <code>true</code>, all &lsquo;<samp>Referer</samp>&rsquo; headers are
+censored.  I recommend setting <code>censorReferer</code> to <code>maybe</code>.
+</p>
+<p>Another header that can have privacy implications is the &lsquo;<samp>Via</samp>&rsquo;
+header, which is used to specify the chain of proxies through which
+a given request has passed.  Polipo will generate &lsquo;<samp>Via</samp>&rsquo; headers
+if the variable <code>disableVia</code> is <code>false</code> (it is true by
+default).  If you choose to generate &lsquo;<samp>Via</samp>&rsquo; headers, you may want
+to set the <code>proxyName</code> variable to some innocuous string
+(see <a href="Client-connections.html#Client-connections">Client connections</a>).
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Censor-Accept_002dLanguage.html#Censor-Accept_002dLanguage" accesskey="1">Censor Accept-Language</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Why Accept-Language is evil.
+</td></tr>
+</table>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT5" href="#DOCF5">(5)</a></h3>
+<p>HTTP contains many mistakes
+and even one spelling error.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Intermediate-proxies.html#Intermediate-proxies" accesskey="n" rel="next">Intermediate proxies</a>, Previous: <a href="Tuning-the-HTTP-parser.html#Tuning-the-HTTP-parser" accesskey="p" rel="previous">Tuning the HTTP parser</a>, Up: <a href="HTTP-tuning.html#HTTP-tuning" accesskey="u" rel="up">HTTP tuning</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

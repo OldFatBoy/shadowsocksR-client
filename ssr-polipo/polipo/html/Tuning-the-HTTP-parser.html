@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Tuning the HTTP parser</title>
+
+<meta name="description" content="The Polipo Manual: Tuning the HTTP parser">
+<meta name="keywords" content="The Polipo Manual: Tuning the HTTP parser">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="HTTP-tuning.html#HTTP-tuning" rel="up" title="HTTP tuning">
+<link href="Censoring-headers.html#Censoring-headers" rel="next" title="Censoring headers">
+<link href="HTTP-tuning.html#HTTP-tuning" rel="previous" title="HTTP tuning">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Tuning-the-HTTP-parser"></a>
+<div class="header">
+<p>
+Next: <a href="Censoring-headers.html#Censoring-headers" accesskey="n" rel="next">Censoring headers</a>, Previous: <a href="HTTP-tuning.html#HTTP-tuning" accesskey="p" rel="previous">HTTP tuning</a>, Up: <a href="HTTP-tuning.html#HTTP-tuning" accesskey="u" rel="up">HTTP tuning</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Tuning-the-HTTP-parser-1"></a>
+<h4 class="subsection">3.3.1 Tuning the HTTP parser</h4>
+<a name="index-laxHttpParser"></a>
+<a name="index-bigBufferSize"></a>
+
+<p>As a number of HTTP servers and CGI scripts serve incorrect HTTP
+headers, Polipo uses a <em>lax</em> parser, meaning that incorrect HTTP
+headers will be ignored (a warning will be logged by default).  If the
+variable <code>laxHttpParser</code> is not set (it is set by default),
+Polipo will use a <em>strict</em> parser, and refuse to serve an
+instance unless it could parse all the headers.
+</p>
+<p>When the amount of headers exceeds one chunk&rsquo;s worth (see <a href="Chunk-memory.html#Chunk-memory">Chunk memory</a>), Polipo will allocate a <em>big buffer</em> in order to store
+the headers.  The size of big buffers, and therefore the maximum
+amount of headers Polipo can parse, is specified by the variable
+<code>bigBufferSize</code> (32kB by default).
+</p>
+
+
+
+</body>
+</html>

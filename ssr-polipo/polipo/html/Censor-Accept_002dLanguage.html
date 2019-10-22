@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Censor Accept-Language</title>
+
+<meta name="description" content="The Polipo Manual: Censor Accept-Language">
+<meta name="keywords" content="The Polipo Manual: Censor Accept-Language">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Censoring-headers.html#Censoring-headers" rel="up" title="Censoring headers">
+<link href="Intermediate-proxies.html#Intermediate-proxies" rel="next" title="Intermediate proxies">
+<link href="Censoring-headers.html#Censoring-headers" rel="previous" title="Censoring headers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Censor-Accept_002dLanguage"></a>
+<div class="header">
+<p>
+Previous: <a href="Censoring-headers.html#Censoring-headers" accesskey="p" rel="previous">Censoring headers</a>, Up: <a href="Censoring-headers.html#Censoring-headers" accesskey="u" rel="up">Censoring headers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Why-censor-Accept_002dLanguage"></a>
+<h4 class="subsubsection">3.3.2.1 Why censor Accept-Language</h4>
+<a name="index-negotiation"></a>
+<a name="index-content-negotiation"></a>
+<a name="index-Accept_002dLanguage"></a>
+
+<p>Recent versions of HTTP include a mechanism known as <em>content
+negotiation</em> which allows a user-agent and a server to negotiate the
+best representation (instance) for a given resource.  For example, a
+server that provides both PNG and GIF versions of an image will serve
+the PNG version to user-agents that support PNG, and the GIF version
+to Internet Explorer.
+</p>
+<p>Content negotiation requires that a client should send with every
+single request a number of headers specifying the user&rsquo;s cultural and
+technical preferences.  Most of these headers do not expose sensitive
+information (who cares whether your browser supports PNG?).  The
+&lsquo;<samp>Accept-Language</samp>&rsquo; header, however, is meant to convey the user&rsquo;s
+linguistic preferences.  In some cases, this information is sufficient
+to pinpoint with great precision the user&rsquo;s origins and even his
+political or religious opinions; think, for example, of the
+implications of sending &lsquo;<samp>Accept-Language: yi</samp>&rsquo; or &lsquo;<samp>ar_PS</samp>&rsquo;.
+</p>
+<p>At any rate, &lsquo;<samp>Accept-Language</samp>&rsquo; is not useful.  Its design is
+based on the assumption that language is merely another representation
+for the same information, and &lsquo;<samp>Accept-Language</samp>&rsquo; simply carries a
+prioritised list of languages, which is not enough to usefully
+describe a literate user&rsquo;s preferences.  A typical French user, for
+example, will prefer an English-language original to a French
+(mis-)translation, while still wanting to see French language texts
+when they are original.  Such a situation cannot be described by the
+simple-minded &lsquo;<samp>Accept-Language</samp>&rsquo; header.
+</p>
+
+
+
+</body>
+</html>

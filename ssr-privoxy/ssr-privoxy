@@ -1,0 +1,247 @@
+#!/bin/bash
+# 作者：mengkaikai
+# 首次使用输入ssr install后安装时会自动安装到 $HOME/.local/share/shadowsocksr
+# 输入ssr config进行配置，输入JSON格式的配置文件
+# 输入ssr uninstall卸载
+# 输入ssr help 展示帮助信息
+
+set -e
+
+SSR_GIT_REPO=https://github.com/shadowsocksr-backup/shadowsocksr.git
+GFWLIST2PRIVOXY_BIN_URL=https://raw.github.com/zfl9/gfwlist2privoxy/master/gfwlist2privoxy
+SSR_INSTALL_PATH=/usr/local/shadowsocksr
+NETWORK_DEVICE=`find /etc/sysconfig/network-scripts/ -type f -name "ifcfg-*" | grep -v ifcfg-lo | awk -F\/ '{print $NF}' | awk -F- '{print $2}'`
+LOCAL_IP_ADDR=`ifconfig ${NETWORK_DEVICE} | grep -v inet6 | grep inet | awk '{print $2}'`
+LOCAL_LOOP_IP_ADDR=127.0.0.1
+PRIVOXY_IP_PORT=8118
+
+if [ -z "$EDITOR" ]; then
+    EDITOR_VIM=`which vim`
+    EDITOR_VI=`which vi`
+    if [ -e ${EDITOR_VIM} ]; then 
+        EDITOR=${EDITOR_VIM}
+    else
+        EDITOR=${EDITOR_VI}
+    fi
+fi
+
+
+ssr_help() {
+    echo -e SSR privoxy and docker proxy tool 
+    echo -e if you have not installed ssr, run \`ssr install\` first
+    echo -e Usage:
+    echo -e "\t" "source ssr help"
+    echo -e "\n" "Install/Uninstall"
+    echo -e "\t" "source ssr install      install shadowsocksr client"
+    echo -e "\t" "source ssr uninstall    uninstall shadowsocksr client"
+    echo -e "\n" "Config and Subscribe"
+    echo -e "\t" "source ssr config       edit config.json and set proxy"
+    echo -e "\n" "Start/Stop/Restart"
+    echo -e "\t" "source ssr start        start the shadowsocks service"
+    echo -e "\t" "source ssr stop         stop the shadowsocks service"
+    echo -e "\t" "source ssr restart      restart the shadowsocks service"
+    echo -e "\n" "Testing and Maintenance"
+    echo -e "\t" "source ssr test         check ip address is in china within socks5 proxy"
+    echo -e "\t" "source ssr log          cat the log of shadowsocks"
+    echo -e "\t" "source ssr clean        clean ssr configuration backups"
+}
+
+ssr_set_selinux() {
+    sed -i "s/SELINUX=.*/SELINUX=disabled/g" /etc/selinux/config
+    SELINUX_STATUS=`getenforce`
+    if [ ${SELINUX_STATUS} = "Enforcing" ]; then
+        setenforce 0
+    fi
+}
+
+ssr_set_firewall() {
+    systemctl disable firewalld
+    systemctl stop firewalld
+}
+
+ssr_set_global_proxy() {
+    sed -i "/export http.*proxy=*/d" /etc/profile
+    sed -i "/.*no.*proxy.*/d" /etc/profile
+    sed -i "/unset http_proxy.*/d" /etc/profile
+    echo "export http_proxy=\"http://${LOCAL_LOOP_IP_ADDR}:${PRIVOXY_IP_PORT}\"" >> /etc/profile
+    echo "export https_proxy=\"http://${LOCAL_LOOP_IP_ADDR}:${PRIVOXY_IP_PORT}\"" >> /etc/profile
+    echo 'no_proxy_8=$(echo 8.{11,14,16}.0.{1..254})' >> /etc/profile
+    echo 'export no_proxy="localhost,127.0.0.1,registry.docker-cn.com,hub-mirror.c.163.com,${no_proxy_8// /,}"' >> /etc/profile
+    source /etc/profile
+}
+
+ssr_unset_global_proxy() {
+    sed -i "/export http.*proxy=*/d" /etc/profile
+    sed -i "/.*no.*proxy.*/d" /etc/profile
+    sed -i "/unset http_proxy.*/d" /etc/profile
+    echo 'unset http_proxy https_proxy no_proxy' >> /etc/profile
+    source /etc/profile
+}
+
+ssr_install() {
+    GIT_TOOL=`which git`
+    if [ -e ${GIT_TOOL} ];then 
+        echo -e "Git tool is installed!"
+    else
+        echo -e "Install git tool"
+        yum install -y git
+        echo -e "Install git tool finished!"
+    fi
+
+    echo -e "Install ShadowSocksR"
+    git clone -b manyuser ${SSR_GIT_REPO} ${SSR_INSTALL_PATH}
+    echo -e "Install ShadowSocksR finished!"
+
+    echo -e "Install Privoxy"
+    yum install -y epel-release
+    yum install -y privoxy
+    echo -e "Install Privoxy finished!"
+    
+    echo -e "Install GFWLIST2PROXY"
+    curl -4sSkLO $GFWLIST2PRIVOXY_BIN_URL
+    chmod +x gfwlist2privoxy
+    echo -e "Install GFWLIST2PROXY finished!"
+}
+
+ssr_uninstall() {
+    echo -e "Remove SSR tools forever?(y/n)"
+    read var
+    if [ ${var} == 'y' ]; then 
+        rm -rvf $SSR_INSTALL_PATH 
+        yum remove -y privoxy
+	rm -rf /etc/privoxy
+    fi
+    echo -e "Remove SSR tools finished!"
+    rm -rf /root/.docker/
+    rm -rf /etc/systemd/system/docker.service.d
+    ssr_unset_global_proxy
+}
+
+ssr_set_docker_proxy() {
+    rm -rf /root/.docker
+    mkdir -p /root/.docker/
+    cat <<EOF> /root/.docker/config.json
+{
+    "proxies":
+    {
+        "default":
+        {
+            "httpProxy": "http://${LOCAL_IP_ADDR}.${PRIVOXY_IP_PORT}",
+            "httpsProxy": "http://${LOCAL_IP_ADDR}:${PRIVOXY_IP_PORT}",
+            "noProxy": "http://deb.debian.org/debian,registry.docker-cn.com,hub-mirror.c.163.com"
+        }
+    }
+}
+EOF
+    echo -e "You can optionally exclude hosts or ranges from going through \
+        the proxy server by setting a noProxy key to one or more \
+        comma-separated IP addresses or hosts"
+    mkdir -p /etc/systemd/system/docker.service.d/
+    cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf
+[Service]
+Environment="HTTP_PROXY=http://${LOCAL_LOOP_IP_ADDR}:${PRIVOXY_IP_PORT}/" "NO_PROXY=localhost,127.0.0.1,registry.docker-cn.com,hub-mirror.c.163.com"
+EOF
+    cat <<EOF > /etc/systemd/system/docker.service.d/https-proxy.conf
+[Service]
+Environment="HTTPS_PROXY=http://${LOCAL_LOOP_IP_ADDR}:${PRIVOXY_IP_PORT}/" "NO_PROXY=localhost,127.0.0.1,registry.docker-cn.com,hub-mirror.c.163.com"
+EOF
+}
+
+ssr_config() {
+    echo -e "Config selinux"
+    ssr_set_selinux
+
+    echo -e "Stop firewalld"
+    ssr_set_firewall
+
+    echo -e "Edit ShadowSocksR config file"
+    $EDITOR $SSR_INSTALL_PATH/config.json
+    
+    echo -e "Create GFWLIST gfwlist.action"
+    SSR_IP_PORT=`grep "local_port" ${SSR_INSTALL_PATH}/config.json | awk -F": " '{print $2}' | awk -F, '{print $1}'`
+    sh gfwlist2privoxy ${LOCAL_LOOP_IP_ADDR}:${SSR_IP_PORT}
+    mv -f gfwlist.action /etc/privoxy/
+
+    echo -e "Edit Privoxy config file"
+    sed -i "/^forward-socks5.*/d" /etc/privoxy/config
+    sed -i "/^actionsfile gfwlist.action.*/d" /etc/privoxy/config
+    echo "forward-socks5 / ${LOCAL_LOOP_IP_ADDR}:${SSR_IP_PORT} ." >>/etc/privoxy/config
+    echo 'actionsfile gfwlist.action' >>/etc/privoxy/config
+    systemctl restart privoxy 
+
+    echo -e "Config docker proxy"
+    ssr_set_docker_proxy 
+    systemctl daemon-reload
+    systemctl restart docker
+
+    echo "Export proxy environment"
+    ssr_set_global_proxy
+
+#    ssr_restart
+}
+
+ssr_test() {
+    echo -e "Testing Connection..."
+
+    COUNTRY=`curl ip.gs | grep -i country | awk -F": " '{print $2}'`
+
+    if [ ${COUNTRY}='China' ];then
+        echo -e "The SSR wasn't running, please check!"
+        exit 1
+    elif [ -n ${COUNTRY} ];then
+        echo -e "The environmen parameters sets wrong, please check!"
+        exit 1
+    else
+        echo -e "SSR started, please try"
+    fi 
+}
+
+ssr_start() {
+    cd ${SSR_INSTALL_PATH}
+    touch ${SSR_INSTALL_PATH}/{ssr.pid,ssr.ssr_log}
+    python shadowsocks/local.py -c config.json -d start --pid-file=${SSR_INSTALL_PATH}/ssr.pid --log-file=${SSR_INSTALL_PATH}/ssr.ssr_log
+    sleep 1
+    systemctl daemon-reload
+    systemctl restart privoxy
+    ssr_set_global_proxy 
+
+    #ssr_test
+}
+
+ssr_stop() {
+    cd ${SSR_INSTALL_PATH}
+    python shadowsocks/local.py -d stop --pid-file=${SSR_INSTALL_PATH}/ssr.pid --log-file=${SSR_INSTALL_PATH}/ssr.ssr_log
+    systemctl stop privoxy 
+    ssr_unset_global_proxy 
+}
+
+ssr_restart() {
+    ssr_stop
+    ssr_start
+}
+
+ssr_log() {
+    tail -f ${SSR_INSTALL_PATH}/ssr.log
+}
+
+ssr_clean() {
+    rm -ri ${SSR_INSTALL_PATH}/config.json.bak.*
+}
+
+ssr_main() {
+    case $1 in
+    help) ssr_help ;;
+    install) ssr_install ;;
+    uninstall) ssr_uninstall ;;
+    config) ssr_config ;;
+    start) ssr_start ;;
+    stop) ssr_stop ;;
+    restart) ssr_restart ;;
+    test) ssr_test ;;
+    log) ssr_log ;;
+    clean) ssr_clean ;;
+    *) ssr_help ;;
+    esac
+}
+
+ssr_main $1

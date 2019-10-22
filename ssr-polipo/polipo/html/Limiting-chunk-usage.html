@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Limiting chunk usage</title>
+
+<meta name="description" content="The Polipo Manual: Limiting chunk usage">
+<meta name="keywords" content="The Polipo Manual: Limiting chunk usage">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Limiting-memory-usage.html#Limiting-memory-usage" rel="up" title="Limiting memory usage">
+<link href="Limiting-object-usage.html#Limiting-object-usage" rel="next" title="Limiting object usage">
+<link href="Limiting-memory-usage.html#Limiting-memory-usage" rel="previous" title="Limiting memory usage">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Limiting-chunk-usage"></a>
+<div class="header">
+<p>
+Next: <a href="Limiting-object-usage.html#Limiting-object-usage" accesskey="n" rel="next">Limiting object usage</a>, Previous: <a href="Limiting-memory-usage.html#Limiting-memory-usage" accesskey="p" rel="previous">Limiting memory usage</a>, Up: <a href="Limiting-memory-usage.html#Limiting-memory-usage" accesskey="u" rel="up">Limiting memory usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Limiting-chunk-usage-1"></a>
+<h4 class="subsection">5.3.1 Limiting chunk usage</h4>
+
+<a name="index-chunkHighMark"></a>
+<a name="index-chunkCriticalMark"></a>
+<a name="index-chunkLowMark"></a>
+<a name="index-CHUNK_005fSIZE-1"></a>
+<a name="index-memory-4"></a>
+<a name="index-chunk-1"></a>
+
+<p>You can limit Polipo&rsquo;s usage of chunk memory by setting
+<code>chunkHighMark</code> and <code>chunkLowMark</code>.
+</p>
+<p>The value <code>chunkHighMark</code> is the absolute maximum number of bytes
+of allocated chunk memory.  When this value is reached, Polipo will try
+to purge objects from its in-memory cache; if that fails to free memory,
+Polipo will start dropping connections.  This value defaults to
+24MB or one quarter of the machine&rsquo;s physical memory, whichever is
+less.
+</p>
+<p>When chunk usage falls back below <code>chunkLowMark</code>, Polipo will
+stop discarding in-memory objects.  The value
+<code>chunkCriticalMark</code>, which should be somewhere between
+<code>chunkLowMark</code> and <code>chunkHighMark</code>, specifies the value
+above which Polipo will make heroic efforts to free memory, including
+punching holes in the middle of instances, but without dropping
+connections.
+</p>
+<p>Unless set explicitly, both <code>chunkLowMark</code> and
+<code>chunkCriticalMark</code> are computed automatically from
+<code>chunkHighMark</code>.
+</p>
+
+
+
+</body>
+</html>

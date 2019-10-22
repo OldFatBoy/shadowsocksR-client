@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Disk cache</title>
+
+<meta name="description" content="The Polipo Manual: Disk cache">
+<meta name="keywords" content="The Polipo Manual: Disk cache">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Caching.html#Caching" rel="up" title="Caching">
+<link href="Asynchronous-writing.html#Asynchronous-writing" rel="next" title="Asynchronous writing">
+<link href="Memory-cache.html#Memory-cache" rel="previous" title="Memory cache">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Disk-cache"></a>
+<div class="header">
+<p>
+Previous: <a href="Memory-cache.html#Memory-cache" accesskey="p" rel="previous">Memory cache</a>, Up: <a href="Caching.html#Caching" accesskey="u" rel="up">Caching</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="The-on_002ddisk-cache"></a>
+<h3 class="section">4.3 The on-disk cache</h3>
+<a name="index-filesystem"></a>
+<a name="index-NFS"></a>
+<a name="index-diskCacheRoot"></a>
+<a name="index-maxDiskEntries"></a>
+<a name="index-diskCacheWriteoutOnClose"></a>
+<a name="index-diskCacheFilePermissions"></a>
+<a name="index-diskCacheDirectoryPermissions"></a>
+<a name="index-maxDiskCacheEntrySize"></a>
+
+<p>The on-disk cache consists in a filesystem subtree rooted at
+a location defined by the variable <code>diskCacheRoot</code>, by default
+<code>&quot;/var/cache/polipo/&quot;</code>.  This directory should normally be
+writeable, readable and seekable by the user running Polipo.  While it
+is best to use a local filesystem for the on-disk cache, a NFSv3- or
+AFS-mounted filesystem should be safe in most implementations.  Do not
+use NFSv2, as it will cause cache corruption <a name="DOCF13" href="#FOOT13"><sup>13</sup></a>.
+</p>
+<p>If <code>diskCacheRoot</code> is an empty string, no disk cache is used.
+</p>
+<p>The value <code>maxDiskEntries</code> (32 by default) is the absolute
+maximum of file descriptors held open for on-disk objects.  When this
+limit is reached, Polipo will close descriptors on
+a least-recently-used basis.  This value should be set to be slightly
+larger than the number of resources that you expect to be live at
+a single time; defining the right notion of liveness is left as an
+exercise for the interested reader.
+</p>
+<p>The value <code>diskCacheWriteoutOnClose</code> (64kB by default) is
+the amount of data that Polipo will write out when closing a disk
+file.  Writing out data when closing a file can avoid subsequently
+reopening it, but causes unnecessary work if the instance is later
+superseded.
+</p>
+<p>The integers <code>diskCacheDirectoryPermissions</code> and
+<code>diskCacheFilePermissions</code> are the Unix filesystem permissions
+with which files and directories are created in the on-disk cache;
+they default to &lsquo;<samp>0700</samp>&rsquo; and &lsquo;<samp>0600</samp>&rsquo; respectively.
+</p>
+<p>The variable <code>maxDiskCacheEntrySize</code> specifies the maximum size,
+in bytes, of an instance that is stored in the on-disk cache.  If set
+to -1 (the default), all objects are stored in the on-disk cache,
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Asynchronous-writing.html#Asynchronous-writing" accesskey="1">Asynchronous writing</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Writing out data when idle.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Purging.html#Purging" accesskey="2">Purging</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Purging the on-disk cache.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Disk-format.html#Disk-format" accesskey="3">Disk format</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Format of the on-disk cache.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Modifying-the-on_002ddisk-cache.html#Modifying-the-on_002ddisk-cache" accesskey="4">Modifying the on-disk cache</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT13" href="#DOCF13">(13)</a></h3>
+<p>Polipo assumes
+that &lsquo;<samp>open(O_CREAT | O_EXCL)</samp>&rsquo; works reliably.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Memory-cache.html#Memory-cache" accesskey="p" rel="previous">Memory cache</a>, Up: <a href="Caching.html#Caching" accesskey="u" rel="up">Caching</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

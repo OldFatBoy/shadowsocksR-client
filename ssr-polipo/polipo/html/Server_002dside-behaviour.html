@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Server-side behaviour</title>
+
+<meta name="description" content="The Polipo Manual: Server-side behaviour">
+<meta name="keywords" content="The Polipo Manual: Server-side behaviour">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="PMM.html#PMM" rel="next" title="PMM">
+<link href="Server-statistics.html#Server-statistics" rel="previous" title="Server statistics">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Server_002dside-behaviour"></a>
+<div class="header">
+<p>
+Next: <a href="PMM.html#PMM" accesskey="n" rel="next">PMM</a>, Previous: <a href="Server-statistics.html#Server-statistics" accesskey="p" rel="previous">Server statistics</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Tweaking-server_002dside-behaviour"></a>
+<h3 class="section">3.6 Tweaking server-side behaviour</h3>
+<a name="index-serverSlots"></a>
+<a name="index-serverSlots1"></a>
+<a name="index-serverMaxSlots"></a>
+<a name="index-smallRequestTime"></a>
+<a name="index-replyUnpipelineTime"></a>
+<a name="index-replyUnpipelineSize"></a>
+<a name="index-maxPipelineTrain"></a>
+<a name="index-pipelineAdditionalRequests"></a>
+<a name="index-maxSideBuffering"></a>
+<a name="index-small-request"></a>
+<a name="index-large-request"></a>
+<a name="index-breaking-pipelines"></a>
+
+<p>The most important piece of information about a server is whether it
+supports persistent connections.  If this is the case, Polipo will
+open at most <code>serverSlots</code> connections to that server
+(<code>serverSlots1</code> if the server only implements HTTP/1.0), and
+attempt to pipeline; if not, Polipo will hit the server harder,
+opening up to <code>serverMaxSlots</code> connections.
+</p>
+<p>Another use of server information is to decide whether to pipeline
+additional requests on a connection that already has in-flight
+requests.  This is controlled by the variable
+<code>pipelineAdditionalRequests</code>; if it is <code>false</code>, no
+additional requests will be pipelined.  If it is <code>true</code>,
+additional requests will be pipelined whenever possible.  If it is
+<code>maybe</code> (the default), additional requests will only be pipelined
+following <em>small</em> requests, where a small request one whose
+download is estimated to take no more than <code>smallRequestTime</code>
+(default 5s).
+</p>
+<p>Sometimes, a request has been pipelined after a request that prompts a
+very large reply from the server; when that happens, the pipeline
+needs be broken in order to reduce latency.  A reply is <em>large</em>
+and will cause a pipeline to be broken if either its size is at least
+<code>replyUnpipelineSize</code> (default one megabyte) or else the server&rsquo;s
+transfer rate is known and the body is expected to take at least
+<code>replyUnpipelineTime</code> to download (default 15s).
+</p>
+<p>The variable <code>maxPipelineTrain</code> defines the maximum number of
+requests that will be pipelined in a single write (default 10).
+Setting this variable to a very low value might (or might not) fix
+interaction with some unreliable servers that the normal heuristics
+are unable to detect.
+</p>
+<p>The variable <code>maxSideBuffering</code> specifies how much data will be
+buffered in a PUT or POST request; it defaults to 1500 bytes.  Setting
+this variable to 0 may cause some media players that abuse the HTTP
+protocol to work.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="PMM.html#PMM" accesskey="n" rel="next">PMM</a>, Previous: <a href="Server-statistics.html#Server-statistics" accesskey="p" rel="previous">Server statistics</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Pipelining</title>
+
+<meta name="description" content="The Polipo Manual: Pipelining">
+<meta name="keywords" content="The Polipo Manual: Pipelining">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network-traffic.html#Network-traffic" rel="up" title="Network traffic">
+<link href="Poor-Mans-Multiplexing.html#Poor-Mans-Multiplexing" rel="next" title="Poor Mans Multiplexing">
+<link href="Persistent-connections.html#Persistent-connections" rel="previous" title="Persistent connections">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Pipelining"></a>
+<div class="header">
+<p>
+Next: <a href="Poor-Mans-Multiplexing.html#Poor-Mans-Multiplexing" accesskey="n" rel="next">Poor Mans Multiplexing</a>, Previous: <a href="Persistent-connections.html#Persistent-connections" accesskey="p" rel="previous">Persistent connections</a>, Up: <a href="Network-traffic.html#Network-traffic" accesskey="u" rel="up">Network traffic</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Pipelining-1"></a>
+<h4 class="subsection">1.4.2 Pipelining</h4>
+<a name="index-Pipelining"></a>
+
+<p>With persistent connections it becomes possible to <em>pipeline</em> or
+<em>stream</em> requests, i.e. to send multiple requests on a single
+connection without waiting for the replies to come back.  Because this
+technique gets the requests to the server faster, it reduces latency.
+Additionally, because multiple requests can often be sent in a single
+packet, pipelining reduces network traffic.
+</p>
+<p>Pipelining is a fairly common technique<a name="DOCF1" href="#FOOT1"><sup>1</sup></a>, but it is not supported by
+HTTP/1.0.  HTTP/1.1 makes pipelining support compulsory in every
+server implementation that can use persistent connections, but there
+are a number of buggy servers that claim to implement HTTP/1.1 but
+don&rsquo;t support pipelining.
+</p>
+<p>Polipo carefully probes for pipelining support in a server and uses
+pipelining if it believes that it is reliable.  Polipo also deeply
+enjoys being pipelined at by a client<a name="DOCF2" href="#FOOT2"><sup>2</sup></a>.
+</p>
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT1" href="#DOCF1">(1)</a></h3>
+<p>The X11 protocol
+fundamentally relies on pipelining.  NNTP does support pipelining.
+SMTP doesn&rsquo;t, while ESMTP makes it an option.  FTP does support
+pipelining on the control connection.</p>
+<h3><a name="FOOT2" href="#DOCF2">(2)</a></h3>
+<p>Other client-side
+implementations of HTTP that make use of pipelining include
+<a href="http://www.opera.com/">Opera</a>,
+<a href="http://www.mozilla.org">Mozilla</a>, APT (the package downloader
+used by <a href="http://www.debian.org">Debian</a> GNU/Linux) and LFTP.</p>
+</div>
+
+
+
+</body>
+</html>

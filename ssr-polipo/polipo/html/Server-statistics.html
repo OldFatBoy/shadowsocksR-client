@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Server statistics</title>
+
+<meta name="description" content="The Polipo Manual: Server statistics">
+<meta name="keywords" content="The Polipo Manual: Server statistics">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="Server_002dside-behaviour.html#Server_002dside-behaviour" rel="next" title="Server-side behaviour">
+<link href="Offline-browsing.html#Offline-browsing" rel="previous" title="Offline browsing">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Server-statistics"></a>
+<div class="header">
+<p>
+Next: <a href="Server_002dside-behaviour.html#Server_002dside-behaviour" accesskey="n" rel="next">Server-side behaviour</a>, Previous: <a href="Offline-browsing.html#Offline-browsing" accesskey="p" rel="previous">Offline browsing</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Server-statistics-1"></a>
+<h3 class="section">3.5 Server statistics</h3>
+<a name="index-serverExpireTime"></a>
+<a name="index-server-statistics"></a>
+<a name="index-round_002dtrip-time"></a>
+<a name="index-transfer-rate"></a>
+
+<p>In order to decide when to pipeline requests (see <a href="Pipelining.html#Pipelining">Pipelining</a>) and
+whether to perform Poor Man&rsquo;s Multiplexing 
+(see <a href="Poor-Mans-Multiplexing.html#Poor-Mans-Multiplexing">Poor Mans Multiplexing</a>), Polipo needs to keep statistics
+about servers.  These include the server&rsquo;s ability to handle
+persistent connections, the server&rsquo;s ability to handle pipelined
+requests, the round-trip time to the server, and the server&rsquo;s transfer
+rate.  The statistics are accessible from Polipo&rsquo;s web interface
+(see <a href="Web-interface.html#Web-interface">Web interface</a>). 
+</p>
+<p>The variable &lsquo;<samp>serverExpireTime</samp>&rsquo; (default 1 day) specifies how
+long such information remains valid.  If a server has not been
+accessed for a time interval of at least <code>serverExpireTime</code>,
+information about it will be discarded.
+</p>
+<p>As Polipo will eventually recover from incorrect information about a
+server, this value can be made fairly large.  The reason why it exists
+at all is to limit the amount of memory used up by information about
+servers.
+</p>
+
+
+
+</body>
+</html>

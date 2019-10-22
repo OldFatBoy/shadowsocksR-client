@@ -1,0 +1,11 @@
+{
+ "proxies":
+ {
+   "default":
+   {
+     "httpProxy": "http://ip_addr:port",
+     "httpsProxy": "http://ip_addr:port",
+     "noProxy": "*.test.example.com,.example2.com"
+   }
+ }
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Internal forbidden list</title>
+
+<meta name="description" content="The Polipo Manual: Internal forbidden list">
+<meta name="keywords" content="The Polipo Manual: Internal forbidden list">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Forbidden.html#Forbidden" rel="up" title="Forbidden">
+<link href="External-redirectors.html#External-redirectors" rel="next" title="External redirectors">
+<link href="Forbidden.html#Forbidden" rel="previous" title="Forbidden">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Internal-forbidden-list"></a>
+<div class="header">
+<p>
+Next: <a href="External-redirectors.html#External-redirectors" accesskey="n" rel="next">External redirectors</a>, Previous: <a href="Forbidden.html#Forbidden" accesskey="p" rel="previous">Forbidden</a>, Up: <a href="Forbidden.html#Forbidden" accesskey="u" rel="up">Forbidden</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Internal-forbidden-list-1"></a>
+<h4 class="subsection">3.8.1 Internal forbidden list</h4>
+<a name="index-forbidden-1"></a>
+<a name="index-redirect-1"></a>
+<a name="index-forbiddenFile"></a>
+<a name="index-forbiddenUrl"></a>
+<a name="index-forbiddenRedirectCode"></a>
+
+<p>The file pointed at by the variable <code>forbiddenFile</code> (defaults to
+<samp>~/.polipo-forbidden</samp> or <samp>/etc/polipo/forbidden</samp>, whichever
+exists) specifies the set of URLs that should never be fetched.  If
+<code>forbiddenFile</code> is a directory, it will be recursively searched
+for files with forbidden URLs.
+</p>
+<p>Every line in a file listing forbidden URLs can either be a domain
+name &mdash; a string that doesn&rsquo;t contain any of &lsquo;<samp>/</samp>&rsquo;, &lsquo;<samp>*</samp>&rsquo; or
+&lsquo;<samp>\</samp>&rsquo; &mdash;, or a POSIX extended regular expression.  Blank lines are
+ignored, as are those that start with a hash sign &lsquo;<samp>#</samp>&rsquo;.
+</p>
+<p>By default, whenever it attempts to fetch a forbidden URL, the browser
+will receive a <em>403 forbidden</em> error from Polipo.  Some users
+prefer to have the browser display a different page or an image.
+</p>
+<p>If <code>forbiddenUrl</code> is not null, it should represent a URL to which
+all forbidden URLs will be redirected.  The kind of redirection used
+is specified by <code>forbiddenRedirectCode</code>; if this is 302 (the
+default) the redirection will be marked as temporary, if 301 it will
+be a permanent one.
+</p>
+
+
+
+</body>
+</html>

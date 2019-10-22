@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Network</title>
+
+<meta name="description" content="The Polipo Manual: Network">
+<meta name="keywords" content="The Polipo Manual: Network">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Client-connections.html#Client-connections" rel="next" title="Client connections">
+<link href="Web-interface.html#Web-interface" rel="previous" title="Web interface">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Network"></a>
+<div class="header">
+<p>
+Next: <a href="Caching.html#Caching" accesskey="n" rel="next">Caching</a>, Previous: <a href="Running.html#Running" accesskey="p" rel="previous">Running</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Polipo-and-the-network"></a>
+<h2 class="chapter">3 Polipo and the network</h2>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Client-connections.html#Client-connections" accesskey="1">Client connections</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Speaking to clients
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Contacting-servers.html#Contacting-servers" accesskey="2">Contacting servers</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Contacting servers.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="HTTP-tuning.html#HTTP-tuning" accesskey="3">HTTP tuning</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tuning at the HTTP level.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Offline-browsing.html#Offline-browsing" accesskey="4">Offline browsing</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Browsing with poor connectivity.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Server-statistics.html#Server-statistics" accesskey="5">Server statistics</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Polipo keeps statistics about servers.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Server_002dside-behaviour.html#Server_002dside-behaviour" accesskey="6">Server-side behaviour</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tuning the server-side behaviour.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="PMM.html#PMM" accesskey="7">PMM</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Poor Man&rsquo;s Multiplexing.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Forbidden.html#Forbidden" accesskey="8">Forbidden</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">You can forbid some URLs.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="DNS.html#DNS" accesskey="9">DNS</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How Polipo finds hosts.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Parent-proxies.html#Parent-proxies">Parent proxies</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Fetching data from other proxies.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Tuning-POST-and-PUT.html#Tuning-POST-and-PUT">Tuning POST and PUT</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tuning POST and PUT requests.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Tunnelling-connections.html#Tunnelling-connections">Tunnelling connections</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tunnelling foreign protocols and https.
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Asynchronous writing</title>
+
+<meta name="description" content="The Polipo Manual: Asynchronous writing">
+<meta name="keywords" content="The Polipo Manual: Asynchronous writing">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Disk-cache.html#Disk-cache" rel="up" title="Disk cache">
+<link href="Purging.html#Purging" rel="next" title="Purging">
+<link href="Disk-cache.html#Disk-cache" rel="previous" title="Disk cache">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Asynchronous-writing"></a>
+<div class="header">
+<p>
+Next: <a href="Purging.html#Purging" accesskey="n" rel="next">Purging</a>, Previous: <a href="Disk-cache.html#Disk-cache" accesskey="p" rel="previous">Disk cache</a>, Up: <a href="Disk-cache.html#Disk-cache" accesskey="u" rel="up">Disk cache</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Asynchronous-writing-1"></a>
+<h4 class="subsection">4.3.1 Asynchronous writing</h4>
+<a name="index-idleTime"></a>
+<a name="index-maxObjectsWhenIdle"></a>
+<a name="index-maxWriteoutWhenIdle"></a>
+
+<p>When Polipo runs out of memory (see <a href="Limiting-memory-usage.html#Limiting-memory-usage">Limiting memory usage</a>), it
+will start discarding instances from its memory cache.  If a disk
+cache has been configured, it will write out any instance that it
+discards.  Any memory allocation that prompted the purge must then
+wait for the write to complete.
+</p>
+<p>In order to avoid the latency hit that this causes, Polipo will
+preemptively write out instances to the disk cache whenever it is
+idle.  The integer <code>idleTime</code> specifies the time during which
+Polipo will remain idle before it starts writing out random objects to
+the on-disk cache; this value defaults to 20s.  You may want to
+decrease this value for a busy cache with little memory, or increase
+it if your cache is often idle and has a lot of memory.
+</p>
+<p>The value <code>maxObjectsWhenIdle</code> (default 32) specifies the maximum
+number of instances that an idle Polipo will write out without
+checking whether there&rsquo;s any new work to do.  The value
+<code>maxWriteoutWhenIdle</code> specifies the maximum amount of data
+(default 64kB) that Polipo will write out without checking for
+new activity.  Increasing these values will make asynchronous
+write-out slightly faster, at the cost of possibly increasing Polipo&rsquo;s
+latency in some rare circumstances.
+</p>
+
+
+
+</body>
+</html>

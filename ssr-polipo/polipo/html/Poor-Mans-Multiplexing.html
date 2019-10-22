@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Poor Mans Multiplexing</title>
+
+<meta name="description" content="The Polipo Manual: Poor Mans Multiplexing">
+<meta name="keywords" content="The Polipo Manual: Poor Mans Multiplexing">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network-traffic.html#Network-traffic" rel="up" title="Network traffic">
+<link href="Partial-instances.html#Partial-instances" rel="next" title="Partial instances">
+<link href="Pipelining.html#Pipelining" rel="previous" title="Pipelining">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Poor-Mans-Multiplexing"></a>
+<div class="header">
+<p>
+Previous: <a href="Pipelining.html#Pipelining" accesskey="p" rel="previous">Pipelining</a>, Up: <a href="Network-traffic.html#Network-traffic" accesskey="u" rel="up">Network traffic</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Poor-Man_0027s-Multiplexing"></a>
+<h4 class="subsection">1.4.3 Poor Man&rsquo;s Multiplexing</h4>
+<a name="index-Poor-Man_0027s-Multiplexing"></a>
+<a name="index-multiplexing"></a>
+
+<p>A major weakness of the HTTP protocol is its inability to share a
+single connection between multiple simultaneous transactions &mdash; to
+<em>multiplex</em> a number of transactions over a single connection.  In
+HTTP, a client can either request all instances sequentially, which
+significantly increases latency, or else open multiple concurrent
+connections, with all the problems that this implies
+(see <a href="Persistent-connections.html#Persistent-connections">Persistent connections</a>).
+</p>
+<p>Poor Man&rsquo;s Multiplexing (PMM) is a technique that simulates
+multiplexing by requesting an instance in multiple segments; because
+the segments are fetched in independent transactions, they can be
+interleaved with requests for other resources.
+</p>
+<p>Obviously, PMM only makes sense in the presence of persistent
+connections; additionally, it is only effective in the presence of
+pipelining (see <a href="Pipelining.html#Pipelining">Pipelining</a>).
+</p>
+<p>PMM poses a number of reliability issues.  If the resource being
+fetched is dynamic, it is quite possible that it will change between
+segments; thus, an implementation making use of PMM needs to be able
+to switch to full-resource retrieval when it detects a dynamic
+resource.
+</p>
+<p>Polipo supports PMM, but it is disabled it by default (see <a href="PMM.html#PMM">PMM</a>).
+</p>
+
+
+
+</body>
+</html>

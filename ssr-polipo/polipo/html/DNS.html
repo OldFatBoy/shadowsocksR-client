@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: DNS</title>
+
+<meta name="description" content="The Polipo Manual: DNS">
+<meta name="keywords" content="The Polipo Manual: DNS">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="Parent-proxies.html#Parent-proxies" rel="next" title="Parent proxies">
+<link href="Forbidden-Tunnels.html#Forbidden-Tunnels" rel="previous" title="Forbidden Tunnels">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="DNS"></a>
+<div class="header">
+<p>
+Next: <a href="Parent-proxies.html#Parent-proxies" accesskey="n" rel="next">Parent proxies</a>, Previous: <a href="Forbidden.html#Forbidden" accesskey="p" rel="previous">Forbidden</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="The-domain-name-service"></a>
+<h3 class="section">3.9 The domain name service</h3>
+<a name="index-DNS"></a>
+<a name="index-name-server"></a>
+<a name="index-gethostbyname"></a>
+<a name="index-resolver"></a>
+<a name="index-IPv6-2"></a>
+<a name="index-dnsMaxTimeout"></a>
+<a name="index-dnsUseGethostbyname"></a>
+<a name="index-dnsNameServer"></a>
+<a name="index-dnsNameServerPort"></a>
+<a name="index-dnsNegativeTtl"></a>
+<a name="index-dnsGethostbynameTtl"></a>
+<a name="index-dnsQueryIPv6"></a>
+
+<p>The low-level protocols beneath HTTP identify machines by IP
+addresses, sequences of four 8-bit integers such as
+&lsquo;<samp>199.232.41.10</samp>&rsquo;<a name="DOCF7" href="#FOOT7"><sup>7</sup></a>.  HTTP, on the other hand, and most application 
+protocols, manipulate host names, strings such as &lsquo;<samp>www.polipo.org</samp>&rsquo;.
+</p>
+<p>The <em>domain name service</em> (DNS) is a distributed database that
+maps host names to IP addresses.  When an application wants to make
+use of the DNS, it invokes a <em>resolver</em>, a local library or
+process that contacts remote name servers.
+</p>
+<p>Polipo usually tries to speak the DNS protocol itself rather than
+using the system resolver<a name="DOCF8" href="#FOOT8"><sup>8</sup></a>.  Its
+precise behaviour is controlled by the value of
+<code>dnsUseGethostbyname</code>.  If <code>dnsUseGethostbyname</code> is
+<code>false</code>, Polipo never uses the system resolver.  If it is
+<code>reluctantly</code> (the default), Polipo tries to speak DNS and falls
+back to the system resolver if a name server could not be contacted.
+If it is <code>happily</code>, Polipo tries to speak DNS, and falls back to
+the system resolver if the host couldn&rsquo;t be found for any reason (this
+is not a good idea for shared proxies).  Finally, if
+<code>dnsUseGethostbyname</code> is <code>true</code>, Polipo never tries to speak
+DNS itself and uses the system resolver straight away (this is not
+recommended).
+</p>
+<p>If the internal DNS support is used, Polipo must be given a recursive
+name server to speak to.  By default, this information is taken from
+the &lsquo;<samp>/etc/resolv.conf</samp>&rsquo; file at startup; however, if you wish to use
+a different name server, you may set the <code>dnsNameServer</code> and
+optionally <code>dnsNameServerPort</code> variables to an IP address and port
+number of a listening DNS server<a name="DOCF9" href="#FOOT9"><sup>9</sup></a>.
+</p>
+<p>When the reply to a DNS request is late to come, Polipo will retry
+multiple times using an exponentially increasing timeout.  The maximum
+timeout used before Polipo gives up is defined by <code>dnsMaxTimeout</code>
+(default 60s); the total time before Polipo gives up on a DNS
+query will be roughly twice <code>dnsMaxTimeout</code>.
+</p>
+<p>The variable <code>dnsNegativeTtl</code> specifies the time during which
+negative DNS information (information that a host <em>doesn&rsquo;t</em>
+exist) will be cached; this defaults to 120s.  Increasing this
+value reduces both latency and network traffic but may cause a failed
+host not to be noticed when it comes back up.
+</p>
+<p>The variable <code>dnsQueryIPv6</code> specifies whether to query for IPv4
+or IPv6 addresses.  If <code>dnsQueryIPv6</code> is <code>false</code>, only IPv4
+addresses are queried.  If <code>dnsQueryIPv6</code> is <code>reluctantly</code>,
+both types of addresses are queried, but IPv4 addresses are preferred.
+If <code>dnsQueryIPv6</code> is <code>happily</code> (the default), IPv6 addresses
+are preferred.  Finally, if <code>dnsQueryIPv6</code> is <code>true</code>, only
+IPv6 addresses are queried.
+</p>
+<p>If the system resolver is used, the value <code>dnsGethostbynameTtl</code>
+specifies the time during which a <code>gethostbyname</code> reply will be
+cached (default 5 minutes).
+</p>
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT7" href="#DOCF7">(7)</a></h3>
+<p>Or sequences of eight 16-bit integers if
+you are running IPv6.</p>
+<h3><a name="FOOT8" href="#DOCF8">(8)</a></h3>
+<p>The Unix interface to the resolver
+is provided by the <code>gethostbyname</code>(3) library call
+(<code>getaddrinfo</code>(3) on recent systems), which was designed at
+a time when a host lookup consisted in searching for one of five hosts
+in a &lsquo;<samp>HOSTS.TXT</samp>&rsquo; file.  The <code>gethostbyname</code> call is
+<em>blocking</em>, meaning that all activity must cease while a host
+lookup is in progress.  When the call eventually returns, it doesn&rsquo;t
+provide a <em>time to live</em> (TTL) value to indicate how long the
+address may be cached.  For these reasons, <code>gethostbyname</code> is
+hardly useful for programs that need to contact more than a few hosts.
+(Recent systems replace <code>gethostbyname</code>(3) by
+<code>getaddrinfo</code>(3), which is reentrant.  While this removes one
+important problem that multi-threaded programs encounter, it doesn&rsquo;t
+solve any of the other issues with <code>gethostbyname</code>.)</p>
+<h3><a name="FOOT9" href="#DOCF9">(9)</a></h3>
+<p>While Polipo does its own
+caching of DNS data, I recommend that you run a local caching name server.
+I am very happy with <a href="http://www.thekelleys.org.uk/dnsmasq/doc.html"><code>dnsmasq</code></a>.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Parent-proxies.html#Parent-proxies" accesskey="n" rel="next">Parent proxies</a>, Previous: <a href="Forbidden.html#Forbidden" accesskey="p" rel="previous">Forbidden</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

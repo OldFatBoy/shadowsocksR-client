@@ -1,0 +1,15 @@
+# SS 的代理地址
+socksParentProxy = "127.0.0.1:1080"
+# 类型
+socksProxyType = socks5
+# 转换为 HTTP 之后的端口
+proxyPort = 8123
+# 下面的就不清楚了
+chunkHighMark = 50331648
+objectHighMark = 16384
+serverMaxSlots = 64
+serverSlots = 16
+serverSlots1 = 32
+proxyAddress = "0.0.0.0"
+logFile = /var/log/polipo.log
+logLevel = 4

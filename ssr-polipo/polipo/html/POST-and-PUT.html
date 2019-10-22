@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: POST and PUT</title>
+
+<meta name="description" content="The Polipo Manual: POST and PUT">
+<meta name="keywords" content="The Polipo Manual: POST and PUT">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Background.html#Background" rel="up" title="Background">
+<link href="Running.html#Running" rel="next" title="Running">
+<link href="Partial-instances.html#Partial-instances" rel="previous" title="Partial instances">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="POST-and-PUT"></a>
+<div class="header">
+<p>
+Previous: <a href="Partial-instances.html#Partial-instances" accesskey="p" rel="previous">Partial instances</a>, Up: <a href="Background.html#Background" accesskey="u" rel="up">Background</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Other-requests"></a>
+<h3 class="section">1.6 Other requests</h3>
+<a name="index-GET-request"></a>
+<a name="index-HEAD-request"></a>
+<a name="index-PUT-request"></a>
+<a name="index-POST-request"></a>
+<a name="index-OPTIONS-request"></a>
+<a name="index-DELETE-request"></a>
+<a name="index-PROPFIND-request"></a>
+
+<p>The previous sections pretend that there is only one kind of request
+in HTTP &mdash; the &lsquo;<samp>GET</samp>&rsquo; request.  In fact, there are some others.
+</p>
+<p>The &lsquo;<samp>HEAD</samp>&rsquo; request method retrieves data about an resource.  Polipo
+does not normally use &lsquo;<samp>HEAD</samp>&rsquo;, but will fall back to using it for
+validation it if finds that a given server fails to cooperate with its
+standard validation methods (see <a href="Cache-transparency.html#Cache-transparency">Cache transparency</a>).  Polipo will
+correctly reply to a client&rsquo;s &lsquo;<samp>HEAD</samp>&rsquo; request.
+</p>
+<p>The &lsquo;<samp>POST</samp>&rsquo; method is used to request that the server should do
+something rather than merely sending an entity; it is usually used
+with HTML forms that have an effect<a name="DOCF3" href="#FOOT3"><sup>3</sup></a>.  The &lsquo;<samp>PUT</samp>&rsquo; method is used to replace an
+resource with a different instance; it is typically used by web
+publishing applications.
+</p>
+<p>&lsquo;<samp>POST</samp>&rsquo;, &lsquo;<samp>PUT</samp>&rsquo;, &lsquo;<samp>OPTIONS</samp>&rsquo; and &lsquo;<samp>DELETE</samp>&rsquo; requests are handled by
+Polipo pretty much like &lsquo;<samp>GET</samp>&rsquo; and &lsquo;<samp>HEAD</samp>&rsquo;; however, for various
+reasons, some precautions must be taken.  In particular, any cached data
+for the resource they refer to must be discarded, and they can never be
+pipelined.
+</p>
+<p>Finally, HTTP/1.1 includes a convenient backdoor with the
+&lsquo;<samp>CONNECT</samp>&rsquo; method.  For more information, please see
+<a href="Tunnelling-connections.html#Tunnelling-connections">Tunnelling connections</a>.
+</p>
+<p>Polipo does not currently handle the more exotic methods such as
+&lsquo;<samp>PROPFIND</samp>&rsquo;.
+</p>
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT3" href="#DOCF3">(3)</a></h3>
+<p>HTML forms should use the
+&lsquo;<samp>GET</samp>&rsquo; method when the form has no side-effect as this makes the
+results cacheable.</p>
+</div>
+
+
+
+</body>
+</html>

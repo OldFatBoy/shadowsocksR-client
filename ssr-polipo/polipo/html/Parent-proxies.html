@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Parent proxies</title>
+
+<meta name="description" content="The Polipo Manual: Parent proxies">
+<meta name="keywords" content="The Polipo Manual: Parent proxies">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="HTTP-parent-proxies.html#HTTP-parent-proxies" rel="next" title="HTTP parent proxies">
+<link href="DNS.html#DNS" rel="previous" title="DNS">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Parent-proxies"></a>
+<div class="header">
+<p>
+Next: <a href="Tuning-POST-and-PUT.html#Tuning-POST-and-PUT" accesskey="n" rel="next">Tuning POST and PUT</a>, Previous: <a href="DNS.html#DNS" accesskey="p" rel="previous">DNS</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Parent-proxies-1"></a>
+<h3 class="section">3.10 Parent proxies</h3>
+
+<p>Polipo will usually fetch instances directly from source servers as
+this configuration minimises latency.  In some cases, however, it may
+be useful to have Polipo fetch instances from a <em>parent</em> proxy.
+</p>
+<p>Polipo can use two protocols to speak to a parent proxy: HTTP and
+SOCKS.  When configured to use both HTTP and SOCKS proxying, Polipo
+will contact an HTTP proxy over SOCKS &mdash; in other words, SOCKS is
+considered as being at a lower (sub)layer than HTTP.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="HTTP-parent-proxies.html#HTTP-parent-proxies" accesskey="1">HTTP parent proxies</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Using an HTTP parent proxy.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="SOCKS-parent-proxies.html#SOCKS-parent-proxies" accesskey="2">SOCKS parent proxies</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Using a SOCKS4a parent proxy.
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

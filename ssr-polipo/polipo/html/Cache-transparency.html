@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Cache transparency</title>
+
+<meta name="description" content="The Polipo Manual: Cache transparency">
+<meta name="keywords" content="The Polipo Manual: Cache transparency">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Caching.html#Caching" rel="up" title="Caching">
+<link href="Tuning-validation.html#Tuning-validation" rel="next" title="Tuning validation">
+<link href="Caching.html#Caching" rel="previous" title="Caching">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Cache-transparency"></a>
+<div class="header">
+<p>
+Next: <a href="Memory-cache.html#Memory-cache" accesskey="n" rel="next">Memory cache</a>, Previous: <a href="Caching.html#Caching" accesskey="p" rel="previous">Caching</a>, Up: <a href="Caching.html#Caching" accesskey="u" rel="up">Caching</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Cache-transparency-and-validation"></a>
+<h3 class="section">4.1 Cache transparency and validation</h3>
+<a name="index-transparent-cache"></a>
+<a name="index-cache-transparency"></a>
+<a name="index-out_002dof_002ddate-instances"></a>
+<a name="index-validation"></a>
+<a name="index-revalidation"></a>
+<a name="index-expire"></a>
+<a name="index-stale"></a>
+<a name="index-fresh"></a>
+
+<p>If resources on a server change, it is possible for a cached instance
+to become out-of date.  Ideally, a cache would be perfectly
+<em>transparent</em>, meaning that it never serves an out-of-date
+instance; in a universe with a finite speed of signal propagation,
+however, this ideal is impossible to achieve.
+</p>
+<p>If a caching proxy decides that a cached instance is new enough to
+likely still be valid, it will directly serve the instance to the
+client; we then say that the cache decided that the instance is
+<em>fresh</em>.  When an instance is <em>stale</em> (not fresh), the cache
+will check with the upstream server whether the resource has changed;
+we say that the cached instance is being <em>revalidated</em>.
+</p>
+<p>In HTTP/1.1, responsibility for revalidation is shared between the
+client, the server and the proxy itself.  The client can override
+revalidation policy by using the &lsquo;<samp>Cache-Control</samp>&rsquo;
+header<a name="DOCF11" href="#FOOT11"><sup>11</sup></a>; for example,
+some user-agents will request end-to-end revalidation in this way when
+the user shift-clicks on <em>reload</em>.  The server may choose to
+specify revalidation policy by using the &lsquo;<samp>Expires</samp>&rsquo; and
+&lsquo;<samp>Cache-Control</samp>&rsquo; headers.  As to the proxy, it needs to choose a
+revalidation policy for instances with neither server- nor client-side
+cache control information.  Of course, nothing (except the HTTP/1.1
+spec, but that is easily ignored) prevents a proxy from overriding the
+client&rsquo;s and server&rsquo;s cache control directives.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Tuning-validation.html#Tuning-validation" accesskey="1">Tuning validation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tuning Polipo&rsquo;s validation behaviour.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Tweaking-validation.html#Tweaking-validation" accesskey="2">Tweaking validation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Further tweaking of validation.
+</td></tr>
+</table>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h3><a name="FOOT11" href="#DOCF11">(11)</a></h3>
+<p>Or the obsolete &lsquo;<samp>Pragma</samp>&rsquo; header.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Memory-cache.html#Memory-cache" accesskey="n" rel="next">Memory cache</a>, Previous: <a href="Caching.html#Caching" accesskey="p" rel="previous">Caching</a>, Up: <a href="Caching.html#Caching" accesskey="u" rel="up">Caching</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

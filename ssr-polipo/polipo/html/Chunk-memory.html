@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Chunk memory</title>
+
+<meta name="description" content="The Polipo Manual: Chunk memory">
+<meta name="keywords" content="The Polipo Manual: Chunk memory">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Memory-usage.html#Memory-usage" rel="up" title="Memory usage">
+<link href="Malloc-memory.html#Malloc-memory" rel="next" title="Malloc memory">
+<link href="Memory-usage.html#Memory-usage" rel="previous" title="Memory usage">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Chunk-memory"></a>
+<div class="header">
+<p>
+Next: <a href="Malloc-memory.html#Malloc-memory" accesskey="n" rel="next">Malloc memory</a>, Previous: <a href="Memory-usage.html#Memory-usage" accesskey="p" rel="previous">Memory usage</a>, Up: <a href="Memory-usage.html#Memory-usage" accesskey="u" rel="up">Memory usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Chunk-memory-1"></a>
+<h3 class="section">5.1 Chunk memory</h3>
+
+<a name="index-CHUNK_005fSIZE"></a>
+<a name="index-MALLOC_005fCHUNKS"></a>
+<a name="index-chunk"></a>
+<a name="index-memory-1"></a>
+
+<p>Most of the memory used by Polipo is stored in chunks, fixed-size
+blocks of memory; the size of a chunk is defined by the compile-time
+constant <code>CHUNK_SIZE</code>, and defaults to 4096 bytes on 32-bit
+platforms, 8192 on 64-bit ones.  Chunks are used for storing object
+data (bodies of instances) and for temporary I/O buffers.  Increasing
+the chunk size increases performance somewhat, but at the cost of
+larger granularity of allocation and hence larger memory usage.
+</p>
+<p>By default, Polipo uses a hand-crafted memory allocator based on
+<code>mmap</code>(2) (<code>VirtualAlloc</code> under Windows) for allocating
+chunks; while this is very slightly faster than the stock memory
+allocator, its main benefit is that it limits memory fragmentation.
+It is possible to disable the chunk allocator, and use
+<code>malloc</code>(3) for all memory allocation, by defining
+<code>MALLOC_CHUNKS</code> at compile time; this is probably only useful for
+debugging.
+</p>
+<p>There is one assumption made about <code>CHUNK_SIZE</code>:
+<code>CHUNK_SIZE</code> multiplied by the number of bits in an
+<code>unsigned long</code> (actually in a <code>ChunkBitmap</code> &mdash; see
+<samp>chunk.c</samp>) must be a multiple of the page size, which is 4096 on
+most systems (8192 on Alpha, and apparently 65536 on Windows).
+</p>
+<p>As all network I/O will be performed in units of one to two chunks,
+<code>CHUNK_SIZE</code> should be at least equal to your network interface&rsquo;s
+MTU (typically 1500 bytes).  Additionally, as much I/O will be done at
+<code>CHUNK_SIZE</code>-aligned addresses, <code>CHUNK_SIZE</code> should ideally
+be a multiple of the page size.
+</p>
+<p>In summary, 2048, 4096, 8192 and 16384 are good choices for
+<code>CHUNK_SIZE</code>.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Malloc-memory.html#Malloc-memory" accesskey="n" rel="next">Malloc memory</a>, Previous: <a href="Memory-usage.html#Memory-usage" accesskey="p" rel="previous">Memory usage</a>, Up: <a href="Memory-usage.html#Memory-usage" accesskey="u" rel="up">Memory usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

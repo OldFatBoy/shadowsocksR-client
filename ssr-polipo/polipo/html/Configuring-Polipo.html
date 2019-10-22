@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Configuring Polipo</title>
+
+<meta name="description" content="The Polipo Manual: Configuring Polipo">
+<meta name="keywords" content="The Polipo Manual: Configuring Polipo">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Polipo-Invocation.html#Polipo-Invocation" rel="up" title="Polipo Invocation">
+<link href="Daemon.html#Daemon" rel="next" title="Daemon">
+<link href="Polipo-Invocation.html#Polipo-Invocation" rel="previous" title="Polipo Invocation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Configuring-Polipo"></a>
+<div class="header">
+<p>
+Next: <a href="Daemon.html#Daemon" accesskey="n" rel="next">Daemon</a>, Previous: <a href="Polipo-Invocation.html#Polipo-Invocation" accesskey="p" rel="previous">Polipo Invocation</a>, Up: <a href="Polipo-Invocation.html#Polipo-Invocation" accesskey="u" rel="up">Polipo Invocation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Configuration"></a>
+<h4 class="subsection">2.1.1 Configuration</h4>
+<a name="index-runtime-configuration"></a>
+<a name="index-variable"></a>
+<a name="index-configuration-variable"></a>
+<a name="index-configuration-file"></a>
+
+<p>There is a number of variables that you can tweak in order to
+configure Polipo, and they should all be described in this manual
+(see <a href="Variable-index.html#Variable-index">Variable index</a>).  You can display the complete, most
+up-to-date list of configuration variables by using the <samp>-v</samp>
+command line flag or by accessing the &ldquo;current configuration&rdquo; page
+of Polipo&rsquo;s web interface (see <a href="Web-interface.html#Web-interface">Web interface</a>).  Configuration
+variables can be set either on the command line or else in the
+configuration file given by the <samp>-c</samp> command-line flag.
+</p>
+<p>Configuration variables are typed, and <samp>-v</samp> will display their
+types.  The type can be of one of the following:
+</p><ul>
+<li> &lsquo;<samp>integer</samp>&rsquo; or &lsquo;<samp>float</samp>&rsquo;: a numeric value;
+
+</li><li> &lsquo;<samp>boolean</samp>&rsquo;: a truth value, one of &lsquo;<samp>true</samp>&rsquo; or &lsquo;<samp>false</samp>&rsquo;;
+
+</li><li> &lsquo;<samp>tristate</samp>&rsquo;: one of &lsquo;<samp>false</samp>&rsquo;, &lsquo;<samp>maybe</samp>&rsquo; or &lsquo;<samp>true</samp>&rsquo;;
+
+</li><li> &lsquo;<samp>4-state</samp>&rsquo;, one of &lsquo;<samp>false</samp>&rsquo;, &lsquo;<samp>reluctantly</samp>&rsquo;,
+&lsquo;<samp>happily</samp>&rsquo; or &lsquo;<samp>true</samp>&rsquo;;
+
+</li><li> &lsquo;<samp>5-state</samp>&rsquo;, one of &lsquo;<samp>false</samp>&rsquo;, &lsquo;<samp>reluctantly</samp>&rsquo;, &lsquo;<samp>maybe</samp>&rsquo;,
+&lsquo;<samp>happily</samp>&rsquo; or &lsquo;<samp>true</samp>&rsquo;;
+
+</li><li> &lsquo;<samp>atom</samp>&rsquo;, a string written within double quotes &lsquo;<samp>&quot;</samp>&rsquo;);
+
+</li><li> &lsquo;<samp>list</samp>&rsquo;, a comma-separated list of strings;
+
+</li><li> &lsquo;<samp>intlist</samp>&rsquo;, a comma-separated list of integers and ranges of
+integers (of the form &lsquo;<var>n</var>&ndash;<var>m</var>&rsquo;).
+</li></ul>
+
+<p>The configuration file has a very simple syntax.  All blank lines are
+ignored, as are lines starting with a hash sign &lsquo;<samp>#</samp>&rsquo;.  Other lines
+must be of the form
+</p><div class="example">
+<pre class="example"><var>var</var> = <var>val</var>
+</pre></div>
+<p>where <var>var</var> is a variable to set and <var>val</var> is the value to set
+it to.
+</p>
+<p>It is possible to change the configuration of a running polipo by
+using the local configuration interface (see <a href="Web-interface.html#Web-interface">Web interface</a>).
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Daemon.html#Daemon" accesskey="n" rel="next">Daemon</a>, Previous: <a href="Polipo-Invocation.html#Polipo-Invocation" accesskey="p" rel="previous">Polipo Invocation</a>, Up: <a href="Polipo-Invocation.html#Polipo-Invocation" accesskey="u" rel="up">Polipo Invocation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

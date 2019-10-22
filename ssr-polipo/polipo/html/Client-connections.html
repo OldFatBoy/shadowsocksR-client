@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Client connections</title>
+
+<meta name="description" content="The Polipo Manual: Client connections">
+<meta name="keywords" content="The Polipo Manual: Client connections">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="Access-control.html#Access-control" rel="next" title="Access control">
+<link href="Network.html#Network" rel="previous" title="Network">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Client-connections"></a>
+<div class="header">
+<p>
+Next: <a href="Contacting-servers.html#Contacting-servers" accesskey="n" rel="next">Contacting servers</a>, Previous: <a href="Network.html#Network" accesskey="p" rel="previous">Network</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Client-connections-1"></a>
+<h3 class="section">3.1 Client connections</h3>
+
+<a name="index-proxyAddress"></a>
+<a name="index-proxyPort"></a>
+<a name="index-proxyName"></a>
+<a name="index-displayName"></a>
+<a name="index-address"></a>
+<a name="index-port"></a>
+<a name="index-IPv6"></a>
+<a name="index-proxy-loop"></a>
+<a name="index-loop"></a>
+<a name="index-proxy-name"></a>
+<a name="index-via"></a>
+<a name="index-loopback-address"></a>
+<a name="index-security"></a>
+
+<p>There are three fundamental values that control how Polipo speaks to
+clients.  The variable <code>proxyAddress</code>, defines the IP address on
+which Polipo will listen; by default, its value is the <em>loopback
+address</em> <code>&quot;127.0.0.1&quot;</code>, meaning that Polipo will listen on the
+IPv4 loopback interface (the local host) only.  By setting this
+variable to a global IP address or to one of the special values
+<code>&quot;::&quot;</code> or <code>&quot;0.0.0.0&quot;</code>, it is possible to allow Polipo to
+serve remote clients.  This is likely to be a security hole unless you
+set <code>allowedClients</code> to a reasonable value (see <a href="Access-control.html#Access-control">Access control</a>).
+</p>
+<p>Note that the type of address that you specify for <code>proxyAddress</code>
+will determine whether Polipo listens to IPv4 or IPv6.  Currently, the
+only way to have Polipo listen to both protocols is to specify the
+IPv6 unspecified address (<code>&quot;::&quot;</code>) for <code>proxyAddress</code>.
+</p>
+<p>The variable <code>proxyPort</code>, by default 8123, defines the TCP port
+on which Polipo will listen.
+</p>
+<p>The variable <code>proxyName</code>, which defaults to the host name of the
+machine on which Polipo is running, defines the <em>name</em> of the
+proxy.  This can be an arbitrary string that should be unique among
+all instances of Polipo that you are running.  Polipo uses it in error
+messages and optionally for detecting proxy loops (by using the
+&lsquo;<samp>Via</samp>&rsquo; HTTP header, see <a href="Censoring-headers.html#Censoring-headers">Censoring headers</a>). Finally, the
+<code>displayName</code> variable specifies the name used in user-visible
+error messages (default &ldquo;Polipo&rdquo;).
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Access-control.html#Access-control" accesskey="1">Access control</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Deciding who can connect.
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Contacting-servers.html#Contacting-servers" accesskey="n" rel="next">Contacting servers</a>, Previous: <a href="Network.html#Network" accesskey="p" rel="previous">Network</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

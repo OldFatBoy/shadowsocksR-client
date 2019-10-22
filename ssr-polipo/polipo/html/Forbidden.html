@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Forbidden</title>
+
+<meta name="description" content="The Polipo Manual: Forbidden">
+<meta name="keywords" content="The Polipo Manual: Forbidden">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Network.html#Network" rel="up" title="Network">
+<link href="Internal-forbidden-list.html#Internal-forbidden-list" rel="next" title="Internal forbidden list">
+<link href="PMM.html#PMM" rel="previous" title="PMM">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Forbidden"></a>
+<div class="header">
+<p>
+Next: <a href="DNS.html#DNS" accesskey="n" rel="next">DNS</a>, Previous: <a href="PMM.html#PMM" accesskey="p" rel="previous">PMM</a>, Up: <a href="Network.html#Network" accesskey="u" rel="up">Network</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Forbidden-and-redirected-URLs"></a>
+<h3 class="section">3.8 Forbidden and redirected URLs</h3>
+<a name="index-forbidden"></a>
+<a name="index-redirect"></a>
+<a name="index-web-counter"></a>
+<a name="index-counter"></a>
+<a name="index-web-bug"></a>
+<a name="index-bug"></a>
+<a name="index-advertisement"></a>
+<a name="index-web-ad"></a>
+<a name="index-banner-ad"></a>
+
+<p>The web contains advertisements that a user-agent is supposed to
+download together with the requested pages.  Not only do
+advertisements pollute the user&rsquo;s brain, pushing them around takes
+time and uses up network bandwidth.
+</p>
+<p>Many so-called content providers also track user activities by using
+<em>web bugs</em>, tiny embedded images that cause a server to log where
+they are requested from.  Such images can be detected because they are
+usually uncacheable (see <a href="Cache-transparency.html#Cache-transparency">Cache transparency</a>) and therefore logged
+by Polipo by default.
+</p>
+<p>Polipo can be configured to prevent certain URLs from reaching the
+browser, either by returning a <em>forbidden</em> error message to the
+user, or by <em>redirecting</em> such URLs to some other URL.
+</p>
+<p>Some content providers attempt to subvert content filtering as well as 
+malware scans by tunnelling their questionable content as https or other 
+encrypted protocols. Other content providers are so clueless as to inject 
+content from external providers into supposedly safe webpages.
+Polipo has therefore the ability to selectively block tunneled connections 
+based on hostname and port information. 
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Internal-forbidden-list.html#Internal-forbidden-list" accesskey="1">Internal forbidden list</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying forbidden URLs.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="External-redirectors.html#External-redirectors" accesskey="2">External redirectors</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Using an external redirector.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Forbidden-Tunnels.html#Forbidden-Tunnels" accesskey="3">Forbidden Tunnels</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying hosts forbidden for tunnelling.
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

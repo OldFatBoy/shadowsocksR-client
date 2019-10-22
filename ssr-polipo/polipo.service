@@ -1,0 +1,15 @@
+[Unit]
+Description=polipo web proxy
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/tmp
+User=root
+Group=root
+ExecStart=/usr/local/bin/polipo -c /etc/polipo/config
+Restart=always
+SyslogIdentifier=Polipo
+
+[Install]
+WantedBy=multi-user.target

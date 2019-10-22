@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Limiting object usage</title>
+
+<meta name="description" content="The Polipo Manual: Limiting object usage">
+<meta name="keywords" content="The Polipo Manual: Limiting object usage">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Limiting-memory-usage.html#Limiting-memory-usage" rel="up" title="Limiting memory usage">
+<link href="OS-usage-limits.html#OS-usage-limits" rel="next" title="OS usage limits">
+<link href="Limiting-chunk-usage.html#Limiting-chunk-usage" rel="previous" title="Limiting chunk usage">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Limiting-object-usage"></a>
+<div class="header">
+<p>
+Next: <a href="OS-usage-limits.html#OS-usage-limits" accesskey="n" rel="next">OS usage limits</a>, Previous: <a href="Limiting-chunk-usage.html#Limiting-chunk-usage" accesskey="p" rel="previous">Limiting chunk usage</a>, Up: <a href="Limiting-memory-usage.html#Limiting-memory-usage" accesskey="u" rel="up">Limiting memory usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Limiting-object-usage-1"></a>
+<h4 class="subsection">5.3.2 Limiting object usage</h4>
+
+<a name="index-objectHighMark"></a>
+<a name="index-publicObjectLowMark"></a>
+<a name="index-objectHashTableSize"></a>
+
+<p>Besides limiting chunk usage, it is possible to limit Polipo&rsquo;s memory
+usage by bounding the number of objects it keeps in memory at any given
+time.  This is done with <code>objectHighMark</code> and
+<code>publicObjectLowMark</code>.
+</p>
+<p>The value <code>objectHighMark</code> is the absolute maximum of objects
+held in memory (including resources and server addresses).  When the
+number of in-memory objects that haven&rsquo;t been superseded yet falls
+below <code>publicObjectLowMark</code>, Polipo will stop writing out objects
+to disk (superseded objects are discarded as soon as possible).
+</p>
+<p>On 32-bit architectures, every object costs 108 bytes of memory, plus
+storage for every globally unique header that is not handled specially
+(hopefully negligible), plus an overhead of one word (4 bytes) for
+every chunk of data in the object.
+</p>
+<p>You may also want to change <code>objectHashTableSize</code>.  This is the
+size of the hash table used for holding objects; it should be a power
+of two and defaults to eight times <code>objectHighMark</code>.  Increasing
+this value will reduce the number of objects being written out to disk
+due to hash table collisions.  Every hash table entry costs one word.
+</p>
+
+
+
+</body>
+</html>

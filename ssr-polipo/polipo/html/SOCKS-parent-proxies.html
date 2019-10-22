@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: SOCKS parent proxies</title>
+
+<meta name="description" content="The Polipo Manual: SOCKS parent proxies">
+<meta name="keywords" content="The Polipo Manual: SOCKS parent proxies">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Parent-proxies.html#Parent-proxies" rel="up" title="Parent proxies">
+<link href="Tuning-POST-and-PUT.html#Tuning-POST-and-PUT" rel="next" title="Tuning POST and PUT">
+<link href="HTTP-parent-proxies.html#HTTP-parent-proxies" rel="previous" title="HTTP parent proxies">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="SOCKS-parent-proxies"></a>
+<div class="header">
+<p>
+Previous: <a href="HTTP-parent-proxies.html#HTTP-parent-proxies" accesskey="p" rel="previous">HTTP parent proxies</a>, Up: <a href="Parent-proxies.html#Parent-proxies" accesskey="u" rel="up">Parent proxies</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="SOCKS-parent-proxies-1"></a>
+<h4 class="subsection">3.10.2 SOCKS parent proxies</h4>
+<a name="index-SOCKS"></a>
+<a name="index-socksParentProxy"></a>
+<a name="index-socksAuthCredentials"></a>
+<a name="index-socksProxyType"></a>
+
+<p>The variable <code>socksParentProxy</code> specifies the hostname and port
+number of a SOCKS parent proxy; it should have the form
+&lsquo;<samp>host:port</samp>&rsquo;.  The variant of the SOCKS protocol being used is
+defined by <code>socksProxyType</code>, which can be either &lsquo;<samp>socks4a</samp>&rsquo;
+or &lsquo;<samp>socks5</samp>&rsquo;; the latter value specifies &ldquo;SOCKS5 with
+hostnames&rdquo;, and is the default.
+</p>
+<p>The variable <code>socksAuthCredentials</code> can be used if your SOCKS
+proxy requires authentication.  For SOCKS4 and 4a, it is just
+a username; for SOCKS5 it is of the form &lsquo;<samp>username:password</samp>&rsquo;.
+</p>
+<p>The main application of the SOCKS support is to use
+<a href="http://tor.eff.org">Tor</a> to evade overly restrictive or
+misconfigured firewalls.  Assuming you have a Tor client running on
+the local host listening on the default port (9050), the following
+uses Tor for all outgoing HTTP traffic:
+</p><div class="example">
+<pre class="example">$ polipo socksParentProxy=localhost:9050
+</pre></div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Top</title>
+
+<meta name="description" content="The Polipo Manual: Top">
+<meta name="keywords" content="The Polipo Manual: Top">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="../dir/index.html" rel="up" title="(dir)">
+<link href="Background.html#Background" rel="next" title="Background">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<h1 class="settitle" align="center">The Polipo Manual</h1>
+
+
+
+
+<a name="SEC_Contents"></a>
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="no-bullet">
+  <li><a name="toc-Background-1" href="Background.html#Background">1 Background</a>
+  <ul class="no-bullet">
+    <li><a name="toc-The-web-and-HTTP" href="The-web.html#The-web">1.1 The web and HTTP</a></li>
+    <li><a name="toc-Proxies-and-caches-1" href="Proxies-and-caches.html#Proxies-and-caches">1.2 Proxies and caches</a></li>
+    <li><a name="toc-Latency-and-throughput-1" href="Latency-and-throughput.html#Latency-and-throughput">1.3 Latency and throughput</a></li>
+    <li><a name="toc-Network-traffic-1" href="Network-traffic.html#Network-traffic">1.4 Network traffic</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Persistent-connections-1" href="Persistent-connections.html#Persistent-connections">1.4.1 Persistent connections</a></li>
+      <li><a name="toc-Pipelining-1" href="Pipelining.html#Pipelining">1.4.2 Pipelining</a></li>
+      <li><a name="toc-Poor-Man_0027s-Multiplexing" href="Poor-Mans-Multiplexing.html#Poor-Mans-Multiplexing">1.4.3 Poor Man&rsquo;s Multiplexing</a></li>
+    </ul></li>
+    <li><a name="toc-Caching-partial-instances" href="Partial-instances.html#Partial-instances">1.5 Caching partial instances</a></li>
+    <li><a name="toc-Other-requests" href="POST-and-PUT.html#POST-and-PUT">1.6 Other requests</a></li>
+  </ul></li>
+  <li><a name="toc-Running-Polipo" href="Running.html#Running">2 Running Polipo</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Starting-Polipo" href="Polipo-Invocation.html#Polipo-Invocation">2.1 Starting Polipo</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Configuration" href="Configuring-Polipo.html#Configuring-Polipo">2.1.1 Configuration</a></li>
+      <li><a name="toc-Running-as-a-daemon" href="Daemon.html#Daemon">2.1.2 Running as a daemon</a></li>
+      <li><a name="toc-Logging-1" href="Logging.html#Logging">2.1.3 Logging</a></li>
+    </ul></li>
+    <li><a name="toc-Configuring-your-browser" href="Browser-configuration.html#Browser-configuration">2.2 Configuring your browser</a></li>
+    <li><a name="toc-Stopping-Polipo-and-getting-it-to-reload" href="Stopping.html#Stopping">2.3 Stopping Polipo and getting it to reload</a></li>
+    <li><a name="toc-The-local-web-server" href="Local-server.html#Local-server">2.4 The local web server</a>
+    <ul class="no-bullet">
+      <li><a name="toc-The-web-interface" href="Web-interface.html#Web-interface">2.4.1 The web interface</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Polipo-and-the-network" href="Network.html#Network">3 Polipo and the network</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Client-connections-1" href="Client-connections.html#Client-connections">3.1 Client connections</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Access-control-1" href="Access-control.html#Access-control">3.1.1 Access control</a></li>
+    </ul></li>
+    <li><a name="toc-Contacting-servers-1" href="Contacting-servers.html#Contacting-servers">3.2 Contacting servers</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Allowed-ports-1" href="Allowed-ports.html#Allowed-ports">3.2.1 Allowed ports</a></li>
+    </ul></li>
+    <li><a name="toc-Tuning-at-the-HTTP-level" href="HTTP-tuning.html#HTTP-tuning">3.3 Tuning at the HTTP level</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Tuning-the-HTTP-parser-1" href="Tuning-the-HTTP-parser.html#Tuning-the-HTTP-parser">3.3.1 Tuning the HTTP parser</a></li>
+      <li><a name="toc-Censoring-headers-1" href="Censoring-headers.html#Censoring-headers">3.3.2 Censoring headers</a>
+      <ul class="no-bullet">
+        <li><a name="toc-Why-censor-Accept_002dLanguage" href="Censor-Accept_002dLanguage.html#Censor-Accept_002dLanguage">3.3.2.1 Why censor Accept-Language</a></li>
+      </ul></li>
+      <li><a name="toc-Adjusting-intermediate-proxy-behaviour" href="Intermediate-proxies.html#Intermediate-proxies">3.3.3 Adjusting intermediate proxy behaviour</a></li>
+    </ul></li>
+    <li><a name="toc-Offline-browsing-1" href="Offline-browsing.html#Offline-browsing">3.4 Offline browsing</a></li>
+    <li><a name="toc-Server-statistics-1" href="Server-statistics.html#Server-statistics">3.5 Server statistics</a></li>
+    <li><a name="toc-Tweaking-server_002dside-behaviour" href="Server_002dside-behaviour.html#Server_002dside-behaviour">3.6 Tweaking server-side behaviour</a></li>
+    <li><a name="toc-Poor-Man_0027s-Multiplexing-1" href="PMM.html#PMM">3.7 Poor Man&rsquo;s Multiplexing</a></li>
+    <li><a name="toc-Forbidden-and-redirected-URLs" href="Forbidden.html#Forbidden">3.8 Forbidden and redirected URLs</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Internal-forbidden-list-1" href="Internal-forbidden-list.html#Internal-forbidden-list">3.8.1 Internal forbidden list</a></li>
+      <li><a name="toc-External-redirectors-1" href="External-redirectors.html#External-redirectors">3.8.2 External redirectors</a></li>
+      <li><a name="toc-Forbidden-Tunnels-1" href="Forbidden-Tunnels.html#Forbidden-Tunnels">3.8.3 Forbidden Tunnels</a></li>
+    </ul></li>
+    <li><a name="toc-The-domain-name-service" href="DNS.html#DNS">3.9 The domain name service</a></li>
+    <li><a name="toc-Parent-proxies-1" href="Parent-proxies.html#Parent-proxies">3.10 Parent proxies</a>
+    <ul class="no-bullet">
+      <li><a name="toc-HTTP-parent-proxies-1" href="HTTP-parent-proxies.html#HTTP-parent-proxies">3.10.1 HTTP parent proxies</a></li>
+      <li><a name="toc-SOCKS-parent-proxies-1" href="SOCKS-parent-proxies.html#SOCKS-parent-proxies">3.10.2 SOCKS parent proxies</a></li>
+    </ul></li>
+    <li><a name="toc-Tuning-POST-and-PUT-requests" href="Tuning-POST-and-PUT.html#Tuning-POST-and-PUT">3.11 Tuning POST and PUT requests</a></li>
+    <li><a name="toc-Tunnelling-connections-1" href="Tunnelling-connections.html#Tunnelling-connections">3.12 Tunnelling connections</a></li>
+  </ul></li>
+  <li><a name="toc-Caching-1" href="Caching.html#Caching">4 Caching</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Cache-transparency-and-validation" href="Cache-transparency.html#Cache-transparency">4.1 Cache transparency and validation</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Tuning-validation-behaviour" href="Tuning-validation.html#Tuning-validation">4.1.1 Tuning validation behaviour</a></li>
+      <li><a name="toc-Further-tweaking-of-validation-behaviour" href="Tweaking-validation.html#Tweaking-validation">4.1.2 Further tweaking of validation behaviour</a></li>
+    </ul></li>
+    <li><a name="toc-The-in_002dmemory-cache" href="Memory-cache.html#Memory-cache">4.2 The in-memory cache</a></li>
+    <li><a name="toc-The-on_002ddisk-cache" href="Disk-cache.html#Disk-cache">4.3 The on-disk cache</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Asynchronous-writing-1" href="Asynchronous-writing.html#Asynchronous-writing">4.3.1 Asynchronous writing</a></li>
+      <li><a name="toc-Purging-the-on_002ddisk-cache" href="Purging.html#Purging">4.3.2 Purging the on-disk cache</a></li>
+      <li><a name="toc-Format-of-the-on_002ddisk-cache" href="Disk-format.html#Disk-format">4.3.3 Format of the on-disk cache</a></li>
+      <li><a name="toc-Modifying-the-on_002ddisk-cache-1" href="Modifying-the-on_002ddisk-cache.html#Modifying-the-on_002ddisk-cache">4.3.4 Modifying the on-disk cache</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Memory-usage-1" href="Memory-usage.html#Memory-usage">5 Memory usage</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Chunk-memory-1" href="Chunk-memory.html#Chunk-memory">5.1 Chunk memory</a></li>
+    <li><a name="toc-Malloc-allocation" href="Malloc-memory.html#Malloc-memory">5.2 Malloc allocation</a></li>
+    <li><a name="toc-Limiting-Polipo_0027s-memory-usage" href="Limiting-memory-usage.html#Limiting-memory-usage">5.3 Limiting Polipo&rsquo;s memory usage</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Limiting-chunk-usage-1" href="Limiting-chunk-usage.html#Limiting-chunk-usage">5.3.1 Limiting chunk usage</a></li>
+      <li><a name="toc-Limiting-object-usage-1" href="Limiting-object-usage.html#Limiting-object-usage">5.3.2 Limiting object usage</a></li>
+      <li><a name="toc-OS-usage-limits-1" href="OS-usage-limits.html#OS-usage-limits">5.3.3 OS usage limits</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Copying-1" href="Copying.html#Copying">Copying</a></li>
+  <li><a name="toc-Variable-index-1" href="Variable-index.html#Variable-index">Variable index</a></li>
+  <li><a name="toc-Concept-index-1" href="Concept-index.html#Concept-index">Concept index</a></li>
+</ul>
+</div>
+
+
+<a name="Top"></a>
+<div class="header">
+<p>
+Next: <a href="Background.html#Background" accesskey="n" rel="next">Background</a>, Previous: <a href="../dir/index.html" accesskey="p" rel="previous">(dir)</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Polipo"></a>
+<h1 class="top">Polipo</h1>
+
+<p>Polipo is a caching web proxy designed to be used as a personal
+cache or a cache shared among a few users.
+</p>
+<p>The latest version of Polipo can be found on 
+<a href="http://www.pps.univ-paris-diderot.fr/~jch/software/polipo/">the Polipo web page</a>.
+</p>
+<p>This manual was written by
+<a href="http://www.pps.univ-paris-diderot.fr/~jch/">Juliusz Chroboczek</a>.
+</p>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Background.html#Background" accesskey="1">Background</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Background information.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Running.html#Running" accesskey="2">Running</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Running Polipo
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Network.html#Network" accesskey="3">Network</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Polipo and the network.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Caching.html#Caching" accesskey="4">Caching</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Caching.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Memory-usage.html#Memory-usage" accesskey="5">Memory usage</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Limiting Polipo&rsquo;s memory usage.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Copying.html#Copying" accesskey="6">Copying</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Your rights and mine.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Variable-index.html#Variable-index" accesskey="7">Variable index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Variable index.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Concept-index.html#Concept-index" accesskey="8">Concept index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Concept index.
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Background.html#Background" accesskey="n" rel="next">Background</a>, Previous: <a href="../dir/index.html" accesskey="p" rel="previous">(dir)</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

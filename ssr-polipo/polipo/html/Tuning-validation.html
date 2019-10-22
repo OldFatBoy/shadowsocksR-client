@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: Tuning validation</title>
+
+<meta name="description" content="The Polipo Manual: Tuning validation">
+<meta name="keywords" content="The Polipo Manual: Tuning validation">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Cache-transparency.html#Cache-transparency" rel="up" title="Cache transparency">
+<link href="Tweaking-validation.html#Tweaking-validation" rel="next" title="Tweaking validation">
+<link href="Cache-transparency.html#Cache-transparency" rel="previous" title="Cache transparency">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Tuning-validation"></a>
+<div class="header">
+<p>
+Next: <a href="Tweaking-validation.html#Tweaking-validation" accesskey="n" rel="next">Tweaking validation</a>, Previous: <a href="Cache-transparency.html#Cache-transparency" accesskey="p" rel="previous">Cache transparency</a>, Up: <a href="Cache-transparency.html#Cache-transparency" accesskey="u" rel="up">Cache transparency</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Tuning-validation-behaviour"></a>
+<h4 class="subsection">4.1.1 Tuning validation behaviour</h4>
+<a name="index-age"></a>
+<a name="index-maxAge"></a>
+<a name="index-maxAgeFraction"></a>
+<a name="index-maxExpiresAge"></a>
+<a name="index-maxNoModifiedAge"></a>
+
+<p>Polipo&rsquo;s revalidation behaviour is controlled by a number of
+variables.  In the following, an resource&rsquo;s <em>age</em> is the time since
+it was last validated, either because it was fetched from the server
+or because it was revalidated.
+</p>
+<p>The policy defining when cached instances become stale in the absence
+of server-provided information is controlled by the variables
+<code>maxAge</code>, <code>maxAgeFraction</code>, <code>maxExpiresAge</code> and
+<code>maxNoModifiedAge</code>.  If an instance has an &lsquo;<samp>Expires</samp>&rsquo; header,
+it becomes stale at the date given by that header, or when its age
+becomes larger than <code>maxExpiresAge</code>, whichever happens first.  If
+an instance has no &lsquo;<samp>Expires</samp>&rsquo; header but has a &lsquo;<samp>LastModified</samp>&rsquo;
+header, it becomes stale when its age reaches either
+<code>maxAgeFraction</code> of the time since it was last modified or else
+the absolute value <code>maxAge</code>, whichever happens first.  Finally,
+if an instance has neither &lsquo;<samp>Expires</samp>&rsquo; nor &lsquo;<samp>Last-Modified</samp>&rsquo;, it
+will become stale when its age reaches <code>maxNoModifiedAge</code>.
+</p>
+
+
+
+</body>
+</html>

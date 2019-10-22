@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 2003 - 2014 by Juliusz Chroboczek. -->
+<!-- Created by GNU Texinfo 5.1, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>The Polipo Manual: HTTP parent proxies</title>
+
+<meta name="description" content="The Polipo Manual: HTTP parent proxies">
+<meta name="keywords" content="The Polipo Manual: HTTP parent proxies">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Variable-index.html#Variable-index" rel="index" title="Variable index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Parent-proxies.html#Parent-proxies" rel="up" title="Parent proxies">
+<link href="SOCKS-parent-proxies.html#SOCKS-parent-proxies" rel="next" title="SOCKS parent proxies">
+<link href="Parent-proxies.html#Parent-proxies" rel="previous" title="Parent proxies">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="HTTP-parent-proxies"></a>
+<div class="header">
+<p>
+Next: <a href="SOCKS-parent-proxies.html#SOCKS-parent-proxies" accesskey="n" rel="next">SOCKS parent proxies</a>, Previous: <a href="Parent-proxies.html#Parent-proxies" accesskey="p" rel="previous">Parent proxies</a>, Up: <a href="Parent-proxies.html#Parent-proxies" accesskey="u" rel="up">Parent proxies</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Variable-index.html#Variable-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="HTTP-parent-proxies-1"></a>
+<h4 class="subsection">3.10.1 HTTP parent proxies</h4>
+<a name="index-parentProxy"></a>
+<a name="index-parentAuthCredentials"></a>
+<a name="index-parent-proxy"></a>
+<a name="index-upstream-proxy"></a>
+<a name="index-firewall"></a>
+<a name="index-authentication-1"></a>
+
+<p>The variable <code>parentProxy</code> specifies the hostname and port number
+of an HTTP parent proxy; it should have the form &lsquo;<samp>host:port</samp>&rsquo;.
+</p>
+<p>If the parent proxy requires authorisation, the username and password
+should be specified in the variable <code>parentAuthCredentials</code> in
+the form &lsquo;<samp>username:password</samp>&rsquo;.  Only <em>Basic</em> authentication
+is supported, which is vulnerable to replay attacks.
+</p>
+<p>The main application of the parent proxy support is to cross
+firewalls.  Given a machine, say <code>trurl</code>, with unrestricted
+access to the web, the following evades a firewall by using an
+encrypted compressed <code>ssh</code> link:
+</p><div class="example">
+<pre class="example">$ ssh -f -C -L 8124:localhost:8123 trurl polipo
+$ polipo parentProxy=localhost:8124
+</pre></div>
+
+
+
+
+</body>
+</html>
